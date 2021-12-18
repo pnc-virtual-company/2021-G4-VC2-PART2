@@ -23,6 +23,7 @@
                             color="blue"
                             autocomplete="false"
                             class="mt-16"
+                            v-model="email"
                             />
                             <v-text-field
                             label="Password"
@@ -31,6 +32,7 @@
                             color="blue"
                             autocomplete="false"
                             type="password"
+                            v-model="password"
                             />
                             <v-row>
                             <v-col cols="12" sm="7">
@@ -47,8 +49,7 @@
                                 >
                             </v-col>
                             </v-row>
-                            <v-btn color="blue" dark block tile>Sign in</v-btn>
-
+                            <v-btn color="blue" dark block tile @click="requestSignIn">Sign in</v-btn>
                             <h5 class="text-center grey--text mt-4 mb-3">
                             Or Sign in using
                             </h5>
@@ -104,11 +105,26 @@
 
 <script>
 export default {
+    emits: ['signin'],
     data: () => ({
         step: 1,
+        message_error: '',
+        email: '',
+        password: ''
     }),
+    methods: {
+        requestSignIn(e){
+            e.preventDefault();
+            let users = {
+                email: this.email,
+                password: this.password
+            }
+            this.$emit('signin', users);
+        }
+    },
 };
 </script>
+
 <style scoped>
     .v-application .rounded-bl-xl {
         border-bottom-left-radius: 300px !important;
