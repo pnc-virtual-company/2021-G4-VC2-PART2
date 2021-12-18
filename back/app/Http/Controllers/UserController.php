@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    // Signup________________________
     public function signup(Request $request){
         $request->validate([
             'password' => 'required|confirmed',
@@ -31,11 +32,14 @@ class UserController extends Controller
             'message' => 'User Created'
         ]);
     }
+
+    // Logout___________________
     public function logout(Request $request)
     {
         return response()->json(['message' => 'User logged out']);
     }
- 
+
+    // Login____________________
     public function login(Request $request){
         // Check email
         $user = User::where('email',$request->email)->first();
