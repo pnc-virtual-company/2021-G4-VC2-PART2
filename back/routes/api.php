@@ -26,6 +26,8 @@ Route::post('/login', [UserController::class, 'login']);
 Route::get('/users', [UserController::class, 'index']);
 Route::get('users/{id}', [UserController::class, 'show']);
 
+Route::put('/images/{id}', [UserController::class, 'updateImage']);
+
 Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get('/users/search/{name}', [UsersController::class, 'search']);
