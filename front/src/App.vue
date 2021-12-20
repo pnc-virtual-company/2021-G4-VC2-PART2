@@ -59,6 +59,7 @@ export default {
     };
   },
   methods: {
+    // ______________________LOGIN________________________ //
     logIn(users){
       axios.post('login', users)
         .then(res => {
@@ -70,6 +71,7 @@ export default {
           console.log(error.response);
         });
     },
+    // ______________________LOGOUT_______________________ //
     logOut(){
       this.user = null;
       this.$router.push('/');
@@ -77,7 +79,7 @@ export default {
   },
   mounted(){
     if(localStorage.Admin){
-        this.user = localStorage.getItem('Admin');
+      this.user = localStorage.getItem('Admin');
     }
   }
 };
