@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container class="container">
         <v-row align="center" justify="center">
         <v-col cols="12" sm="10">
             <v-card class="elevation-6 mt-10">
@@ -34,22 +34,25 @@
                             type="password"
                             v-model="password"
                             />
-                            <v-row>
-                            <v-col cols="12" sm="7">
-                                <v-checkbox
-                                label="Remember Me"
-                                class="mt-n1"
-                                color="blue"
-                                >
-                                </v-checkbox>
-                            </v-col>
-                            <v-col cols="12" sm="5">
-                                <span class="caption blue--text"
-                                >Forgot password</span
-                                >
-                            </v-col>
+                            <div class="message-error">
+                                <span> {{message_error}} </span>
+                            </div>
+                            <v-row class="mt-1">
+                                <v-col cols="12" sm="7">
+                                    <v-checkbox
+                                    label="Remember Me"
+                                    class="mt-n1"
+                                    color="blue"
+                                    >
+                                    </v-checkbox>
+                                </v-col>
+                                <v-col cols="12" sm="5">
+                                    <span class="caption blue--text"
+                                    >Forgot password</span
+                                    >
+                                </v-col>
                             </v-row>
-                            <v-btn color="blue" dark block tile @click="requestSignIn">Sign in</v-btn>
+                            <v-btn color="blue" dark block tile @click="logInRequest">Sign in</v-btn>
                             <h5 class="text-center grey--text mt-4 mb-3">
                             Or Sign in using
                             </h5>
@@ -113,7 +116,8 @@ export default {
         password: ''
     }),
     methods: {
-        requestSignIn(e){
+        // __________________LOGIN_________________ //
+        logInRequest(e){
             e.preventDefault();
             let users = {
                 email: this.email,
@@ -131,5 +135,15 @@ export default {
     }
     .v-application .rounded-br-xl {
         border-bottom-right-radius: 300px !important;
+    }
+    
+    .container{
+        margin-top: -20px;
+    }
+
+    .message-error{
+        color: red;
+        text-align: center;
+        margin-top: -15px;
     }
 </style>
