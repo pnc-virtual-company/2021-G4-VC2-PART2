@@ -81,6 +81,7 @@ export default {
         })
         .catch(error => {
           this.message_error = error.response.data.message;
+          console.log(this.user + ' ' + this.email);
         });
     },
     // ______________________LOGOUT_______________________ //
