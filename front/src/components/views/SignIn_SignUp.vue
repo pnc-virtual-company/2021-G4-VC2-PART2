@@ -37,7 +37,7 @@
                           "
                           @click:append="passwordShow = !passwordShow"
                         />
-                        <v-btn color="blue" dark block tile cols="12" sm="7"
+                        <v-btn color="blue" dark block tile cols="12" sm="7" @click="logInRequest"
                           >Sign in</v-btn
                         >
 
@@ -324,6 +324,8 @@
 <script>
 import json from "../json/PncValues.json";
 export default {
+emits: ['signin'],
+props: ['error'],
   data: () => ({
     step: 1,
     randomIndex: 0,
@@ -335,6 +337,8 @@ export default {
       "Demading approach",
       "Solidarity",
     ],
+    signInEmail: '',
+    signInPassword: '',
     confirmPasswordShow: false,
     passwordShow: false,
     alert: false,
@@ -394,9 +398,20 @@ export default {
     ],
   }),
   methods: {
+    //   get value
     getValues() {
       let index = parseInt((this.randomIndex = Math.random() * 10));
       this.listValues = this.pncValues[index];
+    },
+
+    // __________________LOGIN_________________ //
+    logInRequest(e){
+        e.preventDefault();
+        let users = {
+            email: this.signInEmail,
+            password: this.signInPassword
+        }
+        this.$emit('signin', users);
     },
     // for get each batches
     getbatch() {
@@ -487,8 +502,11 @@ export default {
   mounted() {
     this.getbatch();
   },
+    
+ 
 };
 </script>
+
 <style scoped>
 .v-application .rounded-bl-xl {
   border-bottom-left-radius: 300px !important;
