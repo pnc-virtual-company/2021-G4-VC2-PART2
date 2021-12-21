@@ -17,13 +17,13 @@ class CreateUserDetailsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('CASCADE');
             $table->foreignId('company_id')->constrained()->onDelete('CASCADE');
-            $table->string('gender');
-            $table->date('DOB');
-            $table->string('batch');
-            $table->string('major');
-            $table->string('skill');
-            $table->string('city');
-            $table->string('maritalStatus');
+            $table->string('gender')->nullable();
+            $table->date('DOB')->nullable();
+            $table->string('batch')->nullable();
+            $table->string('major')->nullable();
+            $table->string('skill')->nullable();
+            $table->string('city')->nullable();
+            $table->string('maritalStatus')->nullable();
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\UserDetail;
 
 class UserDetailController extends Controller
 {
@@ -13,7 +14,7 @@ class UserDetailController extends Controller
      */
     public function index()
     {
-        //
+        return UserDetail::with(['user','company'])->latest()->get();
     }
 
     /**
@@ -24,7 +25,29 @@ class UserDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'gender' => 'nullable',
+            'DOB' => 'nullable',
+            'batch' => 'nullable',
+            'major' => 'nullable',
+            'skill' => 'nullable',
+            'city' => 'nullable',
+            'maritalStatus' => 'nullable',
+        ]);
+
+        $userDetail = new UserDetail();
+        $userDetail->user_id = $request->user_id;
+        $userDetail->company_id = $request->company_id;
+        $userDetail->gender = $request->gender;
+        $userDetail->DOB = $request->DOB;
+        $userDetail->batch = $request->batch;
+        $userDetail->major = $request->major;
+        $userDetail->skill = $request->skill;
+        $userDetail->city = $request->city;
+        $userDetail->maritalStatus = $request->maritalStatus;
+        $userDetail->save();
+
+        return response()->json([ 'message'=>'User Detail created successfully!'],201);
     }
 
     /**
@@ -35,7 +58,7 @@ class UserDetailController extends Controller
      */
     public function show($id)
     {
-        //
+        return UserDetail::findOrFail($id);
     }
 
     /**
@@ -47,7 +70,29 @@ class UserDetailController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'gender' => 'nullable',
+            'DOB' => 'nullable',
+            'batch' => 'nullable',
+            'major' => 'nullable',
+            'skill' => 'nullable',
+            'city' => 'nullable',
+            'maritalStatus' => 'nullable',
+        ]);
+
+        $userDetail = UserDetail::findOrFail($id);
+        $userDetail->user_id = $request->user_id;
+        $userDetail->company_id = $request->company_id;
+        $userDetail->gender = $request->gender;
+        $userDetail->DOB = $request->DOB;
+        $userDetail->batch = $request->batch;
+        $userDetail->major = $request->major;
+        $userDetail->skill = $request->skill;
+        $userDetail->city = $request->city;
+        $userDetail->maritalStatus = $request->maritalStatus;
+        $userDetail->save();
+
+        return response()->json([ 'message'=>'User Detail updated successfully!'],200);
     }
 
     /**
@@ -58,6 +103,12 @@ class UserDetailController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $userDetail = UserDetail::destroy($id);
+       
+        if ($userDetail === 1) {
+            return response()->json(['message' => 'deleted successfully'], 200);
+        } else {
+            return response()->json(['message' => 'Cannot deleted no id'], 404);
+        }
     }
 }
