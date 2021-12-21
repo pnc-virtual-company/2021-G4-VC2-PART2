@@ -27,6 +27,14 @@
           Explore Alumni
       </v-btn>
       <v-btn
+          :to="{ path: '/host_event' }"
+          class="mr-3"
+          color="blue darken-2"
+      >
+          <v-icon left >mdi-account-star</v-icon>
+          Host Event
+      </v-btn>
+      <v-btn
           :to="{ path: '/manage_user' }"
           class="mr-3"
           color="blue darken-2"
@@ -37,7 +45,7 @@
     </v-app-bar>
     <v-main>
       <v-container fluid>
-        <router-view @signin="logIn"></router-view>
+        <router-view @signin="logIn" :error="message_error"></router-view>
       </v-container>
     </v-main>
     <v-footer app> </v-footer>
@@ -55,7 +63,9 @@ export default {
   data() {
     return {
       showNavigation: false,
-      user: null
+      user: null,
+      email: '',
+      message_error: ''
     };
   },
   methods: {
@@ -63,17 +73,20 @@ export default {
     logIn(users){
       axios.post('login', users)
         .then(res => {
-          this.user = res.data.user.firstName + ' ' + res.data.user.lastName;
+          this.user = res.data.user.firstName;
+          this.email = res.data.user.email;
           localStorage.setItem('Admin', this.user);
+          localStorage.setItem('email', this.email);
           this.$router.push('/My_profile');
         })
         .catch(error => {
-          console.log(error.response);
+          this.message_error = error.response.data.message;
         });
     },
     // ______________________LOGOUT_______________________ //
     logOut(){
       this.user = null;
+      localStorage.clear();
       this.$router.push('/');
     }
   },

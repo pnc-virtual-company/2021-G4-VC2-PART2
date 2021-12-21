@@ -4,7 +4,7 @@
             <div style="margin-left: 26%;">
             <v-img class="rounded-circle" src="../../assets/jennie.jpg" height="120px" width="120px"/>
             </div>
-            <h4 class="d-flex justify-center mt-4 mb-2">Malita</h4>
+            <h4 class="d-flex justify-center mt-4 mb-2">{{ user }}</h4>
 
         <v-list-item :to="{ path: '/my_profile' }">
             <v-list-item-icon>
@@ -41,7 +41,7 @@
 export default {
     emits: ['logout'],
     data: () => ({
-        
+        user: ''
     }),
     methods: {
         // _____________________LOGOUT_____________________ //
@@ -49,5 +49,8 @@ export default {
             this.$emit('logout');
         }
     },
+    mounted(){
+        this.user = localStorage.getItem('Admin');
+    }
 }
 </script>

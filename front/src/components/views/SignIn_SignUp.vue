@@ -34,8 +34,8 @@
                             type="password"
                             v-model="password"
                             />
-                            <div class="message-error">
-                                <span> {{message_error}} </span>
+                            <div class="message-error"> 
+                                <span> {{error}} </span>
                             </div>
                             <v-row class="mt-1">
                                 <v-col cols="12" sm="7">
@@ -109,9 +109,9 @@
 <script>
 export default {
     emits: ['signin'],
+    props: ['error'],
     data: () => ({
         step: 1,
-        message_error: '',
         email: '',
         password: ''
     }),
