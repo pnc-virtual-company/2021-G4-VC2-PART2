@@ -215,7 +215,7 @@
                             ></v-radio>
                           </v-radio-group>
                           <div class="ml-8">
-                            <span id="mss">{{ selectMessage }}</span>
+                            <span id="mss" :style="{color:spanMssColor}" >{{ selectMessage }}</span>
                           </div>
                         </div>
                         <div v-show="singUpPart">
@@ -356,6 +356,7 @@ props: ['error'],
     message: null,
     selectMessage: null,
     btnText: null,
+    spanMssColor:null,
     dialogColor: null,
     batch: null,
     firstName: null,
@@ -483,13 +484,15 @@ props: ['error'],
         }
       }
       if (istrue) {
-        this.selectMessage = "You are select the right answer!";
+        this.spanMssColor='green'
+        this.selectMessage = "Your selection is the right answer!";
         setTimeout(() => {
           this.singUpPart = !this.singUpPart;
           this.questionPart = !this.questionPart;
         }, 1000);
       } else {
-        this.selectMessage = "You are not select the right answer!";
+        this.spanMssColor='red'
+        this.selectMessage = "Your selection is not the right answer!";
         setTimeout(() => {
           this.selectMessage = null;
           this.valueSelected = null;
@@ -508,8 +511,6 @@ props: ['error'],
   mounted() {
     this.getbatch();
   },
-    
- 
 };
 </script>
 
@@ -544,7 +545,6 @@ props: ['error'],
   margin-bottom: -40px;
 }
 #mss {
-  color: red;
   position: absolute;
 }
 
