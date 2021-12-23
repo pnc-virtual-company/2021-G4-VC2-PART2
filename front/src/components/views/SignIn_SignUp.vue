@@ -1,5 +1,5 @@
 <template>
-  <v-container style="margin-top: 75px">
+  <v-container style="margin-top: 0">
     <v-row align="center" justify="center">
       <v-col cols="12" sm="10">
         <v-card class="elevation-6 mt-10">
@@ -24,6 +24,7 @@
                           autocomplete="false"
                           class="mt-16"
                           append-icon="mdi-email"
+                          v-model="signInEmail"
                         />
                         <v-text-field
                           label="Password"
@@ -31,12 +32,14 @@
                           dense
                           color="blue"
                           autocomplete="false"
+                          v-model="signInPassword"
                           :type="passwordShow ? 'text' : 'password'"
                           :append-icon="
                             passwordShow ? 'mdi-eye' : 'mdi-eye-off'
                           "
                           @click:append="passwordShow = !passwordShow"
                         />
+<<<<<<< HEAD
                         <v-btn
                           color="blue"
                           dark
@@ -45,6 +48,12 @@
                           cols="12"
                           sm="7"
                           @click="logInRequest"
+=======
+                        <div align="center">
+                            <span class="red--text">{{error}}</span>
+                        </div>
+                        <v-btn color="blue" dark block tile cols="12" sm="7" @click="logInRequest"
+>>>>>>> 641fc08657817f92b21ce5f75196c58f9420a07c
                           >Sign in</v-btn
                         >
 
@@ -546,13 +555,14 @@ export default {
     },
 
     // __________________LOGIN_________________ //
-    logInRequest(e) {
-      e.preventDefault();
-      let users = {
-        email: this.signInEmail,
-        password: this.signInPassword,
-      };
-      this.$emit("signin", users);
+    logInRequest(e){
+        e.preventDefault();
+        let users = {
+            email: this.signInEmail,
+            password: this.signInPassword
+        }
+        console.log(users.email + ' ' + users.password);
+        this.$emit('signin', users);
     },
     // for get each batches
     getbatch() {
@@ -692,4 +702,5 @@ export default {
   color: red;
   position: absolute;
 }
+
 </style>
