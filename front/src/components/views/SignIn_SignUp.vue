@@ -233,6 +233,9 @@
                                 v-model="emailAddress"
                                 append-icon="mdi-email"
                               />
+                              <div align="center" class="mt-2" style="margin-bottom: -15px">
+                                <span class="red--text">{{emailError[0]}}</span>
+                              </div>
                             </v-col>
                             <v-col cols="12" sm="12">
                               <v-text-field
@@ -275,6 +278,9 @@
                                 "
                                 @click:append="confirmPasswordShow = !confirmPasswordShow"
                               />
+                              <div align="center" class="mt-4" style="margin-bottom: -30px">
+                                <span class="red--text">{{passwordError[0]}}</span>
+                              </div>
                             </v-col>
                             <v-btn
                               class="mt-6"
@@ -282,7 +288,7 @@
                               dark
                               block
                               tile
-                              @click="userSignUp"
+                              @click="signUpRequest"
                               >Sign up</v-btn
                             >
                           </v-row>
@@ -329,8 +335,8 @@
 <script>
 import json from "../json/PncValues.json";
 export default {
-emits: ['signin'],
-props: ['error'],
+emits: ['signin', 'signup'],
+props: ['error', 'emailError', 'passwordError'],
   data: () => ({
     step: 1,
     randomIndex: 0,
@@ -404,7 +410,7 @@ props: ['error'],
     ],
   }),
   methods: {
-    //   get value
+    //___________________GET VALUES___________ //
     getValues() {
       let index = parseInt((this.randomIndex = Math.random() * 10));
       this.listValues = this.pncValues[index];
@@ -420,13 +426,28 @@ props: ['error'],
         console.log(users.email + ' ' + users.password);
         this.$emit('signin', users);
     },
-    // for get each batches
+    // __________________SIGN UP___________________ //
+    signUpRequest(e) {
+        e.preventDefault();
+        let newUsers = {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.emailAddress,
+          password: this.passWord,
+          password_confirmation: this.conFirmPassWord,
+          role: 'Alumni',
+        }
+        // console.log(newUsers);
+        this.$emit('signup', newUsers);
+    },
+
+    // __________________GET BATCH_________________ //
     getbatch() {
       for (let batchs of this.listAllAlumni) {
         this.listbatches.push(batchs.batch);
       }
     },
-    // get batch seleted
+    // __________________BATCH SELECTED____________ //
     batchSelected() {
       for (let batchs of this.listAllAlumni) {
         if (batchs.batch === this.batch) {
@@ -434,13 +455,13 @@ props: ['error'],
         }
       }
     },
-    // to anable next button
+    // ___________________ENABLE NEXT BUTTON_______ //
     isvalid() {
       if (this.firstName != null && this.lastName != null) {
         this.isNotNull = true;
       }
     },
-    // to check is alumni
+    // ___________________CHECK ALUMNI_____________ //
     isAlumni() {
       this.isDialog = true;
       for (let alumni of this.listAlumni) {
@@ -475,7 +496,7 @@ props: ['error'],
         }, 2000);
       }
     },
-    // to sign user up
+    // ________________TO SIGN UP___________________ //
     toSignUp() {
       let istrue = false;
       for (let value of this.realValues) {
@@ -499,13 +520,6 @@ props: ['error'],
         }, 1000);
         this.getValues();
       }
-    },
-    userSignUp() {
-      console.log(this.firstName);
-      console.log(this.lastName);
-      console.log(this.emailAddress);
-      console.log(this.conFirmPassWord);
-      console.log(this.passWord);
     },
   },
   mounted() {
