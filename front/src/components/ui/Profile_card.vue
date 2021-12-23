@@ -1,35 +1,5 @@
 <template>
     <v-card
-        class="mx-auto mt-12"
-        max-width="344"
-    >
-        <v-img
-            src=""
-        ></v-img>
-
-        <v-card-title>
-            Name
-        </v-card-title>
-
-        <v-card-subtitle>
-            Email
-        </v-card-subtitle>
-
-        <v-card-actions style="margin-left: 80%">
-            <v-btn
-                class="mx-2"
-                fab
-                dark
-                small
-                color="blue"
-            >
-                <v-icon dark>
-                    mdi-plus
-                </v-icon>
-            </v-btn>
-        </v-card-actions>
-    </v-card>
-    <!-- <v-card
         class="mx-auto rounded-lg mt-6"
         max-width="850"
         dense
@@ -158,7 +128,7 @@
             </v-card-actions>
         </v-card>
         </v-expand-transition>
-    </v-card> -->
+    </v-card>
 </template>
 
 <script>
