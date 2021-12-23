@@ -45,7 +45,7 @@
     </v-app-bar>
     <v-main>
       <v-container fluid>
-        <router-view @signin="logIn" :error="message_error"></router-view>
+        <router-view @signin="logIn" @signup='signUp' :error="message_error"></router-view>
       </v-container>
     </v-main>
     <v-footer app> </v-footer>
@@ -64,11 +64,33 @@ export default {
     return {
       showNavigation: false,
       user: null,
-      email: '',
-      message_error: ''
+      role: null,
+      email:null,
+      message_error: null,
+      email_error: null,
+      password_error:null
     };
   },
   methods: {
+    // _____________________SIGN UP_____________________ //
+    signUp(newUsers){
+      console.log(newUsers)
+      axios.post('signup', newUsers)
+        .then(res => {
+          console.log(res.data);
+          this.user = res.data.user.firstName + ' ' + res.data.user.lastName;
+          this.email = res.data.user.email;
+          this.password = res.data.user.password;
+          this.role = res.data.user.role;
+          this.$router.push('/my_profile');
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.email_error = error.response.data.errors.email;
+          this.password_error = error.response.data.errors.password;
+          console.log(error.response.data);
+        });
+    },
     // ______________________LOGIN________________________ //
     logIn(users){
       axios.post('login', users)

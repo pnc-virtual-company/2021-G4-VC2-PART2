@@ -37,7 +37,14 @@
                           "
                           @click:append="passwordShow = !passwordShow"
                         />
-                        <v-btn color="blue" dark block tile cols="12" sm="7" @click="logInRequest"
+                        <v-btn
+                          color="blue"
+                          dark
+                          block
+                          tile
+                          cols="12"
+                          sm="7"
+                          @click="logInRequest"
                           >Sign in</v-btn
                         >
 
@@ -152,9 +159,7 @@
                                 label="First Name"
                                 outlined
                                 dense
-                                :rules="[
-                                  (v) => !!v || 'First Name is required',
-                                ]"
+                                :rules="[(v) => !!v || 'Firstname required']"
                                 required
                                 color="blue"
                                 autocomplete="false"
@@ -169,7 +174,7 @@
                                 outlined
                                 required
                                 dense
-                                :rules="[(v) => !!v || 'Last Name is required']"
+                                :rules="[(v) => !!v || 'Lastname required']"
                                 color="blue"
                                 autocomplete="false"
                                 class="mt-4"
@@ -178,20 +183,151 @@
                               />
                             </v-col>
                             <v-col
-                              cols="12"
-                              sm="12"
+                              cols="auto"
                               align="center"
                               justify="center"
                               style="margin-top: -25px"
                             >
-                              <v-btn
-                                :disabled="!isNotNull"
-                                dark
-                                color="blue"
-                                @click="isAlumni()"
+                              <v-dialog
+                                transition="dialog-top-transition"
+                                max-width="600"
                               >
-                                Next
-                              </v-btn>
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-btn
+                                    style="width: 285px"
+                                    v-show="signUpTimes === 0"
+                                    color="primary"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    >Want any help?</v-btn
+                                  >
+                                  <v-btn
+                                    style="width: 285px"
+                                    v-show="signUpTimes > 0"
+                                    :disabled="!isNotNull"
+                                    dark
+                                    color="blue"
+                                    @click="isAlumni()"
+                                  >
+                                    Next
+                                  </v-btn>
+                                </template>
+                                <template v-slot:default="dialog">
+                                  <v-card>
+                                    <v-toolbar color="primary" dark>
+                                      <v-avatar class="mr-4" size="50">
+                                        <img
+                                          src="../../assets/pn-logo.png"
+                                          alt=""
+                                        />
+                                      </v-avatar>
+                                      <h2 class="text-danger">
+                                        Your name was not found!
+                                      </h2>
+                                      </v-toolbar>
+                                    <v-card-text>
+                                      <div class=" pa-2 mb-0 text-dark">
+                                          <h3>Please Contact to Our Admin or Our
+                                            Ero officer below:</h3>
+                                        </div>
+                                      <div class="pa-4">
+                                        <div class="d-flex">
+                                          <v-icon
+                                            dark
+                                            color="blue"
+                                            class="mr-4"
+                                          >
+                                           mdi-shield-half-full
+                                          </v-icon>
+                                          <h2 class="mt-1 mr-12">Admin</h2>
+                                        </div>
+                                        <div class="ml-12">
+                                          <div class="d-flex">
+                                            <v-icon
+                                              dark
+                                              color="blue"
+                                              class="mr-4"
+                                            >
+                                              mdi-account
+                                            </v-icon>
+                                            <h4 class="mt-1 ml-12">Hun Synich</h4>
+                                          </div>
+                                          <div class="d-flex">
+                                            <v-icon
+                                              dark
+                                              color="blue"
+                                              class="mr-4"
+                                            >
+                                              mdi-email-multiple
+                                            </v-icon>
+                                            <h4 class="mt-1 ml-12">synich.admin@gmail.com</h4>
+                                          </div>
+                                          <div class="d-flex">
+                                            <v-icon
+                                              dark
+                                              color="blue"
+                                              class="mr-4"
+                                            >
+                                              mdi-phone
+                                            </v-icon>
+                                            <h4 class="mt-1 ml-12">0123446789</h4>
+                                          </div>
+                                        </div>
+                                        <div class="d-flex">
+                                          <v-icon
+                                            dark
+                                            color="blue"
+                                            class="mr-4"
+                                          >
+                                            mdi-account-group
+                                          </v-icon>
+                                          <h2 class="mt-1 mr-12">Ero Team</h2>
+                                        </div>
+                                        <div class="ml-12">
+                                          <div class="d-flex">
+                                            <v-icon
+                                              dark
+                                              color="blue"
+                                              class="mr-4"
+                                            >
+                                              mdi-account
+                                            </v-icon>
+                                            <h4 class="mt-1 ml-12">Ero Officer</h4>
+                                          </div>
+                                          <div class="d-flex">
+                                            <v-icon
+                                              dark
+                                              color="blue"
+                                              class="mr-4"
+                                            >
+                                              mdi-email-multiple
+                                            </v-icon>
+                                            <h4 class="mt-1 ml-12">Ero.croCambodia@gmail.com</h4>
+                                          </div>
+                                          <div class="d-flex">
+                                            <v-icon
+                                              dark
+                                              color="blue"
+                                              class="mr-4"
+                                            >
+                                              mdi-phone
+                                            </v-icon>
+                                            <h4 class="mt-1 ml-12">0123446789</h4>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </v-card-text>
+                                    <v-card-actions class="justify-end">
+                                      <v-btn
+                                        text
+                                        color="primary"
+                                        @click="dialog.value = false;refreshPage()"
+                                        >Thank You!</v-btn
+                                      >
+                                    </v-card-actions>
+                                  </v-card>
+                                </template>
+                              </v-dialog>
                             </v-col>
                           </v-row>
                         </div>
@@ -232,9 +368,7 @@
                             <v-col cols="12" sm="12">
                               <v-text-field
                                 label="password"
-                                :type="
-                                  passwordShow ? 'text' : 'password'
-                                "
+                                :type="passwordShow ? 'text' : 'password'"
                                 outlined
                                 dense
                                 :rules="[(v) => !!v || 'Password is required']"
@@ -243,19 +377,17 @@
                                 style="margin-bottom: -30px"
                                 v-model="passWord"
                                 :append-icon="
-                                  passwordShow
-                                    ? 'mdi-eye'
-                                    : 'mdi-eye-off'
+                                  passwordShow ? 'mdi-eye' : 'mdi-eye-off'
                                 "
-                                @click:append="
-                                  passwordShow = !passwordShow
-                                "
+                                @click:append="passwordShow = !passwordShow"
                               />
                             </v-col>
                             <v-col cols="12" sm="12">
                               <v-text-field
                                 label="Confirm password"
-                                :type="confirmPasswordShow ? 'text' : 'password'"
+                                :type="
+                                  confirmPasswordShow ? 'text' : 'password'
+                                "
                                 outlined
                                 dense
                                 :rules="[
@@ -266,9 +398,13 @@
                                 style="margin-bottom: -30px"
                                 v-model="conFirmPassWord"
                                 :append-icon="
-                                  confirmPasswordShow ? 'mdi-eye' : 'mdi-eye-off'
+                                  confirmPasswordShow
+                                    ? 'mdi-eye'
+                                    : 'mdi-eye-off'
                                 "
-                                @click:append="confirmPasswordShow = !confirmPasswordShow"
+                                @click:append="
+                                  confirmPasswordShow = !confirmPasswordShow
+                                "
                               />
                             </v-col>
                             <v-btn
@@ -277,7 +413,7 @@
                               dark
                               block
                               tile
-                              @click="userSignUp"
+                              @click="signUpRequest"
                               >Sign up</v-btn
                             >
                           </v-row>
@@ -324,10 +460,12 @@
 <script>
 import json from "../json/PncValues.json";
 export default {
-emits: ['signin'],
-props: ['error'],
+  emits: ["signin"],
+  props: ["error"],
   data: () => ({
     step: 1,
+    defaultSignUpTimes: 2,
+    signUpTimes: 0,
     randomIndex: 0,
     pncValues: json,
     realValues: [
@@ -337,8 +475,8 @@ props: ['error'],
       "Demading approach",
       "Solidarity",
     ],
-    signInEmail: '',
-    signInPassword: '',
+    signInEmail: "",
+    signInPassword: "",
     confirmPasswordShow: false,
     passwordShow: false,
     alert: false,
@@ -398,6 +536,9 @@ props: ['error'],
     ],
   }),
   methods: {
+    refreshPage(){
+      location.reload()
+    },
     //   get value
     getValues() {
       let index = parseInt((this.randomIndex = Math.random() * 10));
@@ -405,13 +546,13 @@ props: ['error'],
     },
 
     // __________________LOGIN_________________ //
-    logInRequest(e){
-        e.preventDefault();
-        let users = {
-            email: this.signInEmail,
-            password: this.signInPassword
-        }
-        this.$emit('signin', users);
+    logInRequest(e) {
+      e.preventDefault();
+      let users = {
+        email: this.signInEmail,
+        password: this.signInPassword,
+      };
+      this.$emit("signin", users);
     },
     // for get each batches
     getbatch() {
@@ -435,6 +576,7 @@ props: ['error'],
     },
     // to check is alumni
     isAlumni() {
+      let signUpTimeout = (this.signUpTimes -= 1);
       this.isDialog = true;
       for (let alumni of this.listAlumni) {
         if (
@@ -445,27 +587,31 @@ props: ['error'],
         }
       }
       if (!this.isAnAlumni) {
-        this.message = "You are not alumni at PNC.";
+        if (signUpTimeout === 2) {
+          this.message = "Are you sure that you fill your name correctly?";
+        } else if (signUpTimeout === 1) {
+          this.message = "Are you a PNC student?";
+        } else {
+          this.message = "Your time is up! Thanks for Joining us.";
+        }
         this.dialogColor = "red";
-        this.btnText = "Try Again!";
         this.alert = !this.alert;
         setTimeout(() => {
           this.alert = !this.alert;
           this.batch = null;
-          this.firstName = "";
-          this.lastName = "";
-        }, 2000);
+          this.firstName = null;
+          this.lastName = null;
+        }, 4000);
       } else {
         this.message = "You are alumni at PNC.";
         this.dialogColor = "success";
-        this.btnText = "Next";
         this.alert = !this.alert;
         setTimeout(() => {
           this.alert = !this.alert;
           this.getValues();
           this.namePart = !this.namePart;
           this.questionPart = !this.questionPart;
-        }, 2000);
+        }, 4000);
       }
     },
     // to sign user up
@@ -481,29 +627,34 @@ props: ['error'],
         setTimeout(() => {
           this.singUpPart = !this.singUpPart;
           this.questionPart = !this.questionPart;
-        }, 1000);
+        }, 3000);
       } else {
         this.selectMessage = "You are not select the right answer!";
         setTimeout(() => {
           this.selectMessage = null;
           this.valueSelected = null;
-        }, 1000);
+        }, 3000);
         this.getValues();
       }
     },
-    userSignUp() {
-      console.log(this.firstName);
-      console.log(this.lastName);
-      console.log(this.emailAddress);
-      console.log(this.conFirmPassWord);
-      console.log(this.passWord);
+    // _________________SIGN UP__________________ //
+    signUpRequest(e) {
+        e.preventDefault();
+        let newUsers = {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.emailAddress,
+          password: this.passWord,
+          password_confirmation: this.conFirmPassWord,
+          role: 'Alumni',
+        }
+        this.$emit('signup', newUsers);
     },
   },
   mounted() {
     this.getbatch();
+    this.signUpTimes = this.defaultSignUpTimes;
   },
-    
- 
 };
 </script>
 
