@@ -63,12 +63,25 @@ export default {
   data() {
     return {
       showNavigation: false,
+      // _____SIGN IN AND SIGN UP______ //
       user: null,
       role: '',
       email: '',
+      batch: '',
+
+      // _____MANAGE ERROR______ //
       message_error: '',
       email_error: '',
-      password_error: ''
+      password_error: '',
+
+      // _____USER DETAIL______ //
+      gender: '',
+      DOB: '',
+      maritalStatus: '',
+      city: '',
+      major: '',
+      skill: '',
+      phoneNumber: ''
     };
   },
   methods: {
@@ -78,8 +91,9 @@ export default {
         .then(res => {
           this.user = res.data.user.firstName;
           this.email = res.data.user.email;
-          localStorage.setItem('Admin', this.user);
+          localStorage.setItem('user', this.user);
           localStorage.setItem('email', this.email);
+          localStorage.setItem('batch', res.data.user.batch);
           this.$router.push('/My_profile');
         })
         .catch(error => {
@@ -102,18 +116,22 @@ export default {
           this.email = res.data.user.email;
           this.password = res.data.user.password;
           this.role = res.data.user.role;
+          this.batch = res.data.user.batch;
           this.$router.push('/my_profile');
+          localStorage.setItem('user', this.user);
+          localStorage.setItem('email', this.email);
+          localStorage.setItem('batch', this.batch);
         })
         .catch(error => {
           this.email_error = error.response.data.errors.email;
           this.password_error = error.response.data.errors.password;
           console.log(error.response.data);
         });
-    }
+    },
   },
   mounted(){
-    if(localStorage.Admin){
-      this.user = localStorage.getItem('Admin');
+    if(localStorage.user){
+      this.user = localStorage.getItem('user');
     }
   }
 };

@@ -45,6 +45,7 @@ class UserDetailController extends Controller
         $userDetail->skill = $request->skill;
         $userDetail->city = $request->city;
         $userDetail->maritalStatus = $request->maritalStatus;
+        $userDetail->phoneNumber = $request->phoneNumber;
         $userDetail->save();
 
         return response()->json([ 'message'=>'User Detail created successfully!'],201);

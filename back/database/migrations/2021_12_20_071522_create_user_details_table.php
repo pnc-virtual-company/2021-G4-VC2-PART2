@@ -24,6 +24,7 @@ class CreateUserDetailsTable extends Migration
             $table->string('skill')->nullable();
             $table->string('city')->nullable();
             $table->string('maritalStatus')->nullable();
+            $table->string('phoneNumber')->nullable();
             $table->timestamps();
         });
     }
