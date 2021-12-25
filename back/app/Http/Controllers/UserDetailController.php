@@ -26,29 +26,30 @@ class UserDetailController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'gender' => 'nullable',
-            'DOB' => 'nullable',
+            'gender' => 'required',
+            'birthDate' => 'required',
             'batch' => 'nullable',
-            'major' => 'nullable',
-            'skill' => 'nullable',
-            'city' => 'nullable',
-            'maritalStatus' => 'nullable',
+            'major' => 'required',
+            'skills' => 'required',
+            'city' => 'required',
+            'maritalStatus' => 'required',
+            'company_id' => 'nullable'
         ]);
 
         $userDetail = new UserDetail();
         $userDetail->user_id = $request->user_id;
         $userDetail->company_id = $request->company_id;
         $userDetail->gender = $request->gender;
-        $userDetail->DOB = $request->DOB;
+        $userDetail->birthDate = $request->birthDate;
         $userDetail->batch = $request->batch;
         $userDetail->major = $request->major;
-        $userDetail->skill = $request->skill;
+        $userDetail->skills = $request->skills;
         $userDetail->city = $request->city;
         $userDetail->maritalStatus = $request->maritalStatus;
         $userDetail->phoneNumber = $request->phoneNumber;
         $userDetail->save();
 
-        return response()->json([ 'message'=>'User Detail created successfully!'],201);
+        return response()->json([ 'message'=>'User Detail created successfully!', 'usersDetail' => $userDetail],201);
     }
 
     /**
@@ -59,7 +60,7 @@ class UserDetailController extends Controller
      */
     public function show($id)
     {
-        return UserDetail::findOrFail($id);
+        return UserDetail::select('user_details.*')->where('user_id', $id)->get();
     }
 
     /**
@@ -76,7 +77,7 @@ class UserDetailController extends Controller
             'DOB' => 'nullable',
             'batch' => 'nullable',
             'major' => 'nullable',
-            'skill' => 'nullable',
+            'skills' => 'nullable',
             'city' => 'nullable',
             'maritalStatus' => 'nullable',
         ]);
@@ -88,7 +89,7 @@ class UserDetailController extends Controller
         $userDetail->DOB = $request->DOB;
         $userDetail->batch = $request->batch;
         $userDetail->major = $request->major;
-        $userDetail->skill = $request->skill;
+        $userDetail->skills = $request->skills;
         $userDetail->city = $request->city;
         $userDetail->maritalStatus = $request->maritalStatus;
         $userDetail->save();

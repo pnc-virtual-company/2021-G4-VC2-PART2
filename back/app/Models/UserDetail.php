@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserDetail extends Model
 {
     use HasFactory;
-    protected $fillable = ['gender','DOB','batch','major','skill','city','maritalStatus', 'phoneNumber'];
+    protected $fillable = ['gender','birthDate','batch','major','skills','city','maritalStatus', 'phoneNumber'];
     protected $hidden = ['created_at', 'updated_at'];
 
     public function user(){
@@ -19,5 +19,8 @@ class UserDetail extends Model
         return $this->belongsTo(Company::class);
     }
     
+    protected $casts = [
+        'skills' => 'array'
+    ];
 }
 

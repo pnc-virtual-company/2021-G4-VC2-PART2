@@ -26,28 +26,32 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'companyName' => 'nullable',
-            'alumniPosition' => 'nullable',
-            'companyHR' => 'nullable',
-            'companyEmail' => 'nullable',
-            'companyContact' => 'nullable',
-            'companyLocation' => 'nullable',
+            'user_id' => 'required',
+            'companyName' => 'required',
+            'alumniPosition' => 'required',
+            'companyHR' => 'required',
+            'companyEmail' => 'required',
+            'companyContact' => 'required',
+            'companyLocation' => 'required',
+            'companyWebsite' => 'required'
         ]);
         
         $com = new Company();
-        $img = 'https://www.zerobhs.com/public/uploads/company/all-other-images/logo/default-logo.png';
+        // $img = 'https://www.zerobhs.com/public/uploads/company/all-other-images/logo/default-logo.png';
 
         if(Company::where('companyName',$request->companyName)->exists()){
             return response()->json(['message'=>'exist']);
         }
         else{
+            $com->user_id = $request->user_id;
             $com->companyName = $request->companyName;
             $com->alumniPosition = $request->alumniPosition;
             $com->companyHR = $request->companyHR;
             $com->companyEmail = $request->companyEmail;
             $com->companyContact = $request->companyContact;
             $com->companyLocation = $request->companyLocation;
-            $com->companyImage = $img;
+            $com->companyWebsite = $request->companyWebsite;
+            // $com->companyImage = $img;
             $com->save();
 
             return response()->json([ 'message'=>'Company created successfully!'],201);
@@ -65,7 +69,9 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        return Company::findOrfail($id);
+        // return Company::findOrfail($id);
+        return Company::select('companies.*')->where('user_id', $id)->get();
+        // return Company::join('user_details', 'companies.id', '=', 'user_details.company_id')->get('companies.*', 'user_details.company_id');
     }
 
     
@@ -91,12 +97,13 @@ class CompanyController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'companyName' => 'nullable',
-            'alumniPosition' => 'nullable',
-            'companyHR' => 'nullable',
-            'companyEmail' => 'nullable',
-            'companyContact' => 'nullable',
-            'companyLocation' => 'nullable',
+            'companyName' => 'required',
+            'alumniPosition' => 'required',
+            'companyHR' => 'required',
+            'companyEmail' => 'required',
+            'companyContact' => 'required',
+            'companyLocation' => 'required',
+            'companyWebsite' => 'required'
         ]);
 
         $com = Company::findOrFail($id);
@@ -106,11 +113,10 @@ class CompanyController extends Controller
         $com->companyEmail = $request->companyEmail;
         $com->companyContact = $request->companyContact;
         $com->companyLocation = $request->companyLocation;
+        $com->companyWebsite = $request->companyWebsite;
         $com->save();
 
-        return response()->json([ 'message'=>'Company updated successfully!'],200);
-
-        
+        return response()->json([ 'message'=>'Company updated successfully!'], 200);
     }
 
     /**
