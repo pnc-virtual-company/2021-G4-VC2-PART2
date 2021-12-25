@@ -50,7 +50,7 @@ export default {
         }
     },
     mounted(){
-        this.user = localStorage.getItem('Admin');
+        this.user = localStorage.getItem('user');
     }
 }
 </script>

@@ -23,6 +23,7 @@ class UserController extends Controller
             'firstName' => 'required',
             'lastName' => 'required',
             'role' => 'required',
+            'batch' => 'nullable',
             'userImage' => 'nullable',
         ]);
 
@@ -33,6 +34,7 @@ class UserController extends Controller
         $user->firstName = $request->firstName;
         $user->lastName = $request->lastName;
         $user->role = $request->role;
+        $user->batch = $request->batch;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         // $user->userImage = $img;
