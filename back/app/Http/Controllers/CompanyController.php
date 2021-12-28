@@ -27,13 +27,8 @@ class CompanyController extends Controller
     {
         $request->validate([
             'user_id' => 'required',
-            'companyName' => 'required',
-            'alumniPosition' => 'required',
-            'companyHR' => 'required',
-            'companyEmail' => 'required',
-            'companyContact' => 'required',
-            'companyLocation' => 'required',
-            'companyWebsite' => 'required'
+            'companyName' => 'required|unique',
+            'companyImage' => 'required|'
         ]);
         
         $com = new Company();
@@ -45,12 +40,7 @@ class CompanyController extends Controller
         else{
             $com->user_id = $request->user_id;
             $com->companyName = $request->companyName;
-            $com->alumniPosition = $request->alumniPosition;
-            $com->companyHR = $request->companyHR;
-            $com->companyEmail = $request->companyEmail;
-            $com->companyContact = $request->companyContact;
-            $com->companyLocation = $request->companyLocation;
-            $com->companyWebsite = $request->companyWebsite;
+            $com->companyImage = $request->companyImage;
             $com->save();
 
             return response()->json([ 'message'=>'Company created successfully!'],201);
@@ -77,13 +67,11 @@ class CompanyController extends Controller
     public function search($name)
     {
         $result = Company::where('companyName', 'LIKE', '%'. $name. '%')->get();
-        if(count($result)){
-         return Response()->json($result);
+        if (count($result)){
+            return Response()->json($result);
+        } else {
+            return response()->json(['Result' => 'Data not found'], 404);
         }
-        else
-        {
-        return response()->json(['Result' => 'No Data not found'], 404);
-      }
     }
 
     /**
@@ -96,23 +84,17 @@ class CompanyController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'companyName' => 'required',
-            'alumniPosition' => 'required',
-            'companyHR' => 'required',
-            'companyEmail' => 'required',
-            'companyContact' => 'required',
-            'companyLocation' => 'required',
-            'companyWebsite' => 'required'
+            'user_id' => 'required',
+            'companyName' => 'required|unique',
+            'companyImage' => 'required'
         ]);
 
         $com = Company::findOrFail($id);
+
+        $com->user_id = $request->user_id;
         $com->companyName = $request->companyName;
-        $com->alumniPosition = $request->alumniPosition;
-        $com->companyHR = $request->companyHR;
-        $com->companyEmail = $request->companyEmail;
-        $com->companyContact = $request->companyContact;
-        $com->companyLocation = $request->companyLocation;
-        $com->companyWebsite = $request->companyWebsite;
+        $com->companyImage = $request->companyImage;
+
         $com->save();
 
         return response()->json([ 'message'=>'Company updated successfully!'], 200);
