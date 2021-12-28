@@ -15,14 +15,15 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('companyName')->nullable();
-            $table->string('alumniPosition')->nullable();
-            $table->string('companyHR')->nullable();
-            $table->string('companyWebsite')->nullable();
-            $table->string('companyEmail')->nullable();
-            $table->integer('companyContact')->nullable();
-            $table->string('companyLocation')->nullable();
-            $table->string('companyImage')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('CASCADE');
+            $table->string('companyName');
+            $table->string('alumniPosition');
+            $table->string('companyHR');
+            $table->string('companyWebsite');
+            $table->string('companyEmail');
+            $table->string('companyContact');
+            $table->string('companyLocation');
+            // $table->string('companyImage');
             $table->timestamps();
         });
     }

@@ -16,12 +16,12 @@ class CreateUserDetailsTable extends Migration
         Schema::create('user_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('CASCADE');
-            $table->foreignId('company_id')->constrained()->onDelete('CASCADE');
+            $table->foreignId('company_id')->nullable()->constrained()->onDelete('CASCADE');
             $table->string('gender')->nullable();
-            $table->date('DOB')->nullable();
+            $table->date('birthDate')->nullable();
             $table->string('batch')->nullable();
             $table->string('major')->nullable();
-            $table->string('skill')->nullable();
+            $table->json('skills')->nullable();
             $table->string('city')->nullable();
             $table->string('maritalStatus')->nullable();
             $table->string('phoneNumber')->nullable();

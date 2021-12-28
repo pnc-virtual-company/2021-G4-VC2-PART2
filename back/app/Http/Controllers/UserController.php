@@ -164,14 +164,40 @@ class UserController extends Controller
         $user =  User::findOrFail($id);
 
         // store image
-        $user->userImage = $request->file('userImage')->hashName();
-        $request->file('userImage')->store('public/images/users');
+        // $user->userImage = $request->file('userImage')->hashName();
+        // $request->file('userImage')->store('public/images/users');
 
-        $user->save();
+        if($request->file('userImage')!=''){
+            $path = public_path()."/storage/images/users/";
+            $file = $request->userImage;
+            $fileName = $file->getClientOriginalName();
+            if($user->userImage!='' && $user->userImage!= null && $user->userImage!=[]){
+                $oldImg = $path.$user->userImage;
+                unlink($oldImg);
+                $user->userImage = $fileName;
+            }
+            else{
+                $user->userImage = $fileName;
+            }
+            
+            $file->move($path,$fileName);
+            $user->update(['userImage'=>$fileName]);
+            $user->save();
+            return response()->json([
+                'user' => $user,
+                'message' => 'Update Image successfully',
+            ]);
 
+        }
+        else{
+            $user->userImage = $request->file();
+            $user->save();
+        }
+        
+        
         return response()->json([
             'user' => $user,
-            'message' => 'User Image Updated',
+            'message' => 'Image not found',
         ]);
     }
 
