@@ -17,13 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('CASCADE');
             $table->string('companyName');
-            $table->string('alumniPosition');
-            $table->string('companyHR');
-            $table->string('companyWebsite');
-            $table->string('companyEmail');
-            $table->string('companyContact');
-            $table->string('companyLocation');
-            // $table->string('companyImage');
+            $table->string('companyImage');
             $table->timestamps();
         });
     }

@@ -629,7 +629,6 @@ export default {
         email: this.signInEmail,
         password: this.signInPassword,
       };
-      console.log(users.email + " " + users.password);
       this.$emit("signin", users);
     },
     // __________________SIGN UP___________________ //

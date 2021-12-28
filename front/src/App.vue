@@ -83,7 +83,6 @@ export default {
                 })
                 .catch(error => {
                     this.message_error = error.response.data.message;
-                    console.log(this.user + ' ' + this.email);
                 });
         },
         // ______________________LOGOUT_______________________ //
@@ -108,6 +107,7 @@ export default {
                     localStorage.setItem('batch', this.batch);
                     localStorage.setItem('id', res.data.user.id);
                     localStorage.setItem('isSignUp', true);
+                    localStorage.setItem('role', this.role);
                 })
                 .catch(error => {
                     this.email_error = error.response.data.errors.email;

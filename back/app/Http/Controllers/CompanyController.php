@@ -51,7 +51,6 @@ class CompanyController extends Controller
             $com->companyContact = $request->companyContact;
             $com->companyLocation = $request->companyLocation;
             $com->companyWebsite = $request->companyWebsite;
-            // $com->companyImage = $img;
             $com->save();
 
             return response()->json([ 'message'=>'Company created successfully!'],201);

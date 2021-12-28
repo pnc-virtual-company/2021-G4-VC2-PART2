@@ -319,7 +319,6 @@ export default {
         save(date) {
             this.$refs.menu.save(date);
         },
-
         // _____________GET DETAIL___________ //
         getDetailInfo() {
             axios.get('usersDetail/' + this.userId)
@@ -335,7 +334,6 @@ export default {
                 })
                 // console.log(this.isSignUp);
         },
-
         // _____________ADD USER DETAIL___________ //
         addDetailInfo() {
             let userInfo = {
@@ -360,7 +358,6 @@ export default {
                     console.log(error.response);
                 });
         },
-
         // _____________GET COMPANY DETAIL___________ //
         getCompanyDetailInfo(){
             axios.get('companies/' + this.userId)
@@ -376,7 +373,6 @@ export default {
                     console.log(this.companyInfo);
                 })
         },
-
         // _____________ADD COMPANY DETAIL___________ //
         addCompanyDetailInfo() {
             let companyInfo = {
@@ -403,7 +399,6 @@ export default {
         this.username = localStorage.getItem('user');
         this.email = localStorage.getItem('email');
         this.batch = localStorage.getItem('batch');
-        console.log(this.isSignUp)
         this.getDetailInfo();
         this.getCompanyDetailInfo();
     }
@@ -417,14 +412,12 @@ export default {
     position: absolute;
     width: 100%;
 }
-
 /* Profile Card */
 .edit-btn {
     position: absolute;
     top: 5px;
     right: 5px;
 }
-
 .edit_profile {
     position: absolute;
     top: 95px;
@@ -433,26 +426,21 @@ export default {
     margin-left: -30px;
     font-size: 18px;
 }
-
 .alumni-info-left,
 .alumni-info-center,
 .alumni-info-right {
     padding: 5px;
     margin: 10px;
 }
-
 .alumni-info-left {
     width: 28%;
 }
-
 .alumni-info-center {
     width: 34%;
 }
-
 .alumni-info-right {
     width: 38%;
 }
-
 .explore-btn {
     border-bottom: 4px solid rgb(105, 167, 248);
     border-radius: 0px;
@@ -461,7 +449,6 @@ export default {
     margin-top: -60px;
     position: absolute;
 }
-
 .close-btn {
     margin-right: 20px;
     margin-top: -10px;
