@@ -43,11 +43,14 @@ Route::post('/companies', [CompanyController::class, 'store']);
 Route::put('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
 
+
+Route::get('/users/search/{name}', [UsersController::class, 'search']);
+Route::put('users/{id}', [UserController::class, 'update']);
+Route::delete('users/{id}', [UserController::class, 'destroy']);
+
 Route::group(['middleware' => ['auth:sanctum']], function(){
 
-    Route::get('/users/search/{name}', [UsersController::class, 'search']);
-    Route::put('users/{id}', [UserController::class, 'update']);
-    Route::delete('users/{id}', [UserController::class, 'destroy']);
+    
 
     Route::post('/logout', [UserController::class, 'logout']);
 });
