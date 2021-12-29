@@ -12,7 +12,7 @@
         <h1 class="white--text">Hello</h1>
         <div align="center" style="margin-top: -15px">
           <v-avatar size="100">
-            <img src="../../assets/avatar_profile.png" alt="" />
+            <img src="https://www.portal.chat/img/avatar.svg" alt="" />
           </v-avatar>
         </div>
 
@@ -179,16 +179,116 @@
 
                   <!-- Add Company Information -->
                   <v-row v-else>
-                    <v-col cols="12" sm="6" style="margin-top: 10px">
-                      <v-text-field
-                        label="Company:"
-                        solo
-                        required
+                    <v-col
+                      cols="12"
+                      md="10"
+                      style="margin-top: 10px; width: 400px"
+                    >
+                      <v-autocomplete
                         v-model="company"
-                        :rules="[(v) => !!v || 'Company is required']"
-                      ></v-text-field>
+                        :items="states"
+                        :filter="customFilter"
+                        color="white"
+                        solo
+                        item-text="name"
+                        label="Select Your company"
+                        @change="hello"
+                      >
+                        <template v-slot:selection="data">
+                          <v-chip>
+                            <v-avatar left>
+                              <v-img
+                                src="http://cdn.onlinewebfonts.com/svg/img_568656.png"
+                              ></v-img>
+                            </v-avatar>
+                            {{ data.item.name }}
+                          </v-chip>
+                        </template>
+                      </v-autocomplete>
                     </v-col>
-                    <v-col cols="12" sm="6" style="margin-top: 10px">
+                    <v-col cols="6" md="2" style="margin-top: 7px">
+                      <v-btn
+                        @click="showCompanyForm"
+                        class="mx-2"
+                        fab
+                        dark
+                        color="#2196F3"
+                      >
+                        +
+                        <v-icon dark> mdi-domain </v-icon>
+                      </v-btn>
+                    </v-col>
+
+                    <!-- add company   -->
+
+                    <div v-show="isAddCompany" class="addCompanyForm">
+                      <div>
+                        <label for="company_logo">
+                          <v-icon
+                            class="mx-2 mt-4 camera"
+                            aria-hidden="true"
+                            fab
+                            dark
+                            color="#000000"
+                            style="font-size: 17px"
+                          >
+                            mdi-camera-plus-outline
+                          </v-icon>
+                        </label>
+                        <img
+                          id="company_img"
+                          :src="companyProfile"
+                          alt="profile"
+                        />
+
+                        <input
+                          id="company_logo"
+                          class="d-none"
+                          accept="image/*"
+                          type="file"
+                          prepend-icon="mdi-camera"
+                          style="margin-bottom: -45px"
+                          @change="setCompanyImg"
+                          filled
+                        />
+                      </div>
+                      <v-row>
+                        <v-col cols="12" style="margin-top: 10px">
+                          <v-text-field
+                            v-model="companyName"
+                            label="Company Name"
+                            required
+                            dense
+                            append-icon="mdi-briefcase-variant"
+                            outlined
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <div class="d-flex" style="margin-top: -17px">
+                        <div class="mr-2">
+                          <v-btn
+                            @click="showCompanyForm"
+                            x-small
+                            color="red"
+                            dark
+                          >
+                            Cancel
+                            <v-icon right dark>
+                              mdi-close-circle
+                            </v-icon></v-btn
+                          >
+                        </div>
+                        <div>
+                          <v-btn @click="addCompany" x-small color="primary" dark>
+                            Add Company
+                            <v-icon right dark> mdi-arrow-right-circle </v-icon>
+                          </v-btn>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- ___ -->
+
+                    <v-col cols="12" sm="6" style="margin-top: -30px">
                       <v-text-field
                         label="Company Website:"
                         solo
@@ -215,7 +315,7 @@
                         :rules="[(v) => !!v || 'Position is required']"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" style="margin-top: -30px">
+                    <v-col cols="12" sm="6" style="margin-top: -30px">
                       <v-text-field
                         label="HR's name:"
                         solo
@@ -224,7 +324,7 @@
                         :rules="[(v) => !!v || 'Name is required']"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" style="margin-top: -30px">
+                    <v-col cols="12" sm="6" style="margin-top: -30px">
                       <v-text-field
                         label="Email: example@gmail.com"
                         type="email"
@@ -234,7 +334,7 @@
                         :rules="[(v) => !!v || 'Email is required']"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" style="margin-top: -30px">
+                    <v-col cols="12" sm="6" style="margin-top: -30px">
                       <v-text-field
                         label="Tel: 87 XXX XXX"
                         type="Tel"
@@ -311,8 +411,20 @@
         </v-btn>
       </div>
       <div align="center">
-        <v-avatar size="120" class="profile ml-4 mt-4">
-          <img src="../../assets/jennie.jpg" alt="" />
+        <v-avatar
+          v-if="user.userImage === null"
+          size="120"
+          class="profile ml-4 mt-4"
+        >
+          <img src="https://www.portal.chat/img/avatar.svg" alt="" />
+        </v-avatar>
+        <v-avatar v-else size="120" class="profile ml-4 mt-4">
+          <img
+            :src="
+              'http://127.0.0.1:8000/storage/images/users/' + user.userImage
+            "
+            alt=""
+          />
         </v-avatar>
         <!-- img dialog  -->
         <div>
@@ -358,27 +470,6 @@
                         filled
                       />
                     </div>
-                    <!-- <div id="header-right">
-                      <img for='profile' id="pro_img" :src="imageView" aria-hidden="true" alt="profile"  />
-                    </div>
-                    <input id='profile'
-                     class="d-none" 
-                     accept="image/*"
-                      type="file"
-                      prepend-icon="mdi-camera"
-                      style="margin-bottom: -45px"
-                      @change="addImg"
-                      label="Select Your Image here"
-                      filled
-                    /> -->
-                    <!-- <v-file-input
-                    type="file"
-                      style="margin-bottom: -45px"
-                      @change="addImg"
-                      label="Select Your Image here"
-                      filled
-                      prepend-icon="mdi-camera"
-                    ></v-file-input> -->
                   </div>
                 </v-card-text>
                 <v-card-actions>
@@ -541,8 +632,10 @@
 import axios from "../../axios-http";
 export default {
   data: () => ({
-    imageView:
-      "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars.png",
+    companyProfile:
+      "https://png.pngtree.com/png-vector/20190418/ourlarge/pngtree-vector-office-building-icon-png-image_953174.jpg",
+    imageView: "https://www.portal.chat/img/avatar.svg",
+    imgCompany: null,
     user: null,
     username: "",
     email: "",
@@ -573,8 +666,8 @@ export default {
     date: null,
     menu: false,
     profileImage: null,
-    userId: localStorage.getItem("id"),
     personalInfo: localStorage.getItem("personalInfo"),
+    userId: localStorage.getItem("id"),
     gender: ["Male", "Female"],
     status: [
       "Single",
@@ -622,16 +715,25 @@ export default {
     userPhoneNumber: "",
     userProvince: "",
     // ____________ADD COMPANY____________ //
+    isAddCompany: false,
+    companyName: null,
     isCompanyDetailHidden: true,
     isNotCancellled: true,
     companyInfo: [],
-    company: "",
     website: "",
     address: "",
     position: "",
     HR_name: "",
     company_email: "",
     company_tel: "",
+    company: null,
+    states: [
+      { name: "hello", id: 1 },
+      { name: "hel", id: 2 },
+      { name: "hell", id: 3 },
+      { name: "heo", id: 4 },
+      { name: "he", id: 5 },
+    ],
   }),
   watch: {
     menu(val) {
@@ -639,6 +741,9 @@ export default {
     },
   },
   methods: {
+    showCompanyForm() {
+      this.isAddCompany = !this.isAddCompany;
+    },
     // ____________SAVE DATE______________ //
     save(date) {
       this.$refs.menu.save(date);
@@ -658,15 +763,17 @@ export default {
     setProfileImage() {
       let UserDetail = new FormData();
       UserDetail.append("userImage", this.profileImage);
-      UserDetail.append("_method",'PUT');
+      UserDetail.append("_method", "PUT");
       axios
         .post("users/images/" + this.userId, UserDetail)
         .then((res) => {
           console.log(res.data);
+          this.getUser();
         })
         .catch((error) => {
           console.log(error.response.data.message);
         });
+      this.imageView = "https://www.portal.chat/img/avatar.svg";
       // console.log(this.user);
     },
     // ____________GET DETAIL__________ //
@@ -745,6 +852,39 @@ export default {
           console.log(error);
         });
     },
+    // __________________Add company___________________
+    setCompanyImg(event) {
+      this.imgCompany = event.target.files[0];
+      this.companyProfile = URL.createObjectURL(this.imgCompany);
+    },
+    addCompany() {
+      let NewCompany = new FormData()
+      NewCompany.append('companyImage',this.imgCompany);
+      NewCompany.append('companyName',this.companyName);
+      NewCompany.append('user_id',this.userID);
+
+      axios
+        .post("companies/" + this.userId,NewCompany )
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data.message);
+        });
+      
+    },
+    customFilter(item, queryText) {
+      const textOne = item.name.toLowerCase();
+      console.log(item.id);
+      console.log("yes");
+      const searchText = queryText.toLowerCase();
+
+      return textOne.indexOf(searchText) > -1;
+    },
+    hello(df) {
+      console.log(df);
+      console.log(this.company);
+    },
   },
   mounted() {
     this.username = localStorage.getItem("user");
@@ -785,32 +925,33 @@ export default {
   margin-left: 80px;
   border-radius: 50px;
 }
+#company_img {
+  width: 80px;
+  height: 80px;
+  margin-left: 65px;
+  border-radius: 50px;
+}
 .edit_profile:hover {
   color: gray;
   top: 95px;
   width: 45px;
   height: 45px;
 }
-
 .alumni-info-left,
 .alumni-info-center,
 .alumni-info-right {
   padding: 5px;
   margin: 10px;
 }
-
 .alumni-info-left {
   width: 28%;
 }
-
 .alumni-info-center {
   width: 34%;
 }
-
 .alumni-info-right {
   width: 38%;
 }
-
 .explore-btn {
   border-bottom: 4px solid rgb(105, 167, 248);
   border-radius: 0px;
@@ -819,11 +960,30 @@ export default {
   margin-top: -60px;
   position: absolute;
 }
-
 .close-btn {
   margin-right: 20px;
   margin-top: -10px;
   border-bottom: 4px solid red;
   border-radius: 0px;
+}
+.addCompanyForm {
+  box-shadow: 0px 0px 14px 11px rgba(0, 0, 0, 0.42);
+  -webkit-box-shadow: 0px 0px 14px 11px rgba(0, 0, 0, 0.42);
+  -moz-box-shadow: 0px 0px 14px 11px rgba(0, 0, 0, 0.42);
+  z-index: 1;
+  margin-top: 30px;
+  margin-left: 155px;
+  width: 250px;
+  background: rgb(255, 255, 255);
+  padding: 20px;
+  border-radius: 5px;
+  position: absolute;
+}
+.camera {
+  position: absolute;
+  top: 80px;
+  width: 100%;
+  margin-right: -20px;
+  padding-right: -20px;
 }
 </style>

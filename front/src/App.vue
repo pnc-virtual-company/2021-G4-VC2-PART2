@@ -109,6 +109,7 @@ export default {
                     localStorage.setItem('batch', this.batch);
                     localStorage.setItem('id', res.data.user.id);
                     localStorage.setItem('isSignUp', true);
+                    localStorage.setItem('role', this.role);
                 })
                 .catch(error => {
                     console.log(error.response.data.message)

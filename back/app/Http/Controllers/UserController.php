@@ -163,10 +163,6 @@ class UserController extends Controller
         // create User
         $user =  User::findOrFail($id);
 
-        // store image
-        // $user->userImage = $request->file('userImage')->hashName();
-        // $request->file('userImage')->store('public/images/users');
-
         if($request->file('userImage')!=''){
             $path = public_path()."/storage/images/users/";
             $file = $request->userImage;
