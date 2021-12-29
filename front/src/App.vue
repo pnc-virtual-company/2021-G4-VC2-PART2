@@ -110,9 +110,9 @@ export default {
                     localStorage.setItem('role', this.role);
                 })
                 .catch(error => {
-                    this.email_error = error.response.data.errors.email;
+                    this.email_error = error.response.data.message;
                     this.password_error = error.response.data.errors.password;
-                    console.log(error.response.data);
+                    console.log(this.email_error);
                     localStorage.setItem('isSignUp', false);
                 });
         },

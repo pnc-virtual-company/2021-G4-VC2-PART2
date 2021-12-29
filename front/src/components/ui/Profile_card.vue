@@ -154,8 +154,8 @@
             </v-btn>
         </div>
         <div class="d-flex justify-center" style="margin-left: 40px">
-            <v-icon dark color="pink"> mdi-gender-female </v-icon>
-            <!-- <v-icon dark color="blue"> mdi-gender-male </v-icon> -->
+            <v-icon dark color="pink"  class="mr-2" v-if="gender[1] === sex"> mdi-gender-female </v-icon>
+            <v-icon dark color="blue" class="mr-2" v-else> mdi-gender-male </v-icon>
             <h2 class="mt-1 mr-12"> {{ username }} </h2>
         </div>
         <div class="d-flex ma-1 mt-3">
