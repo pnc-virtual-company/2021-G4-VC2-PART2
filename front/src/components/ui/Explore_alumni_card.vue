@@ -137,7 +137,7 @@
                             </div>
 
                             <v-card-actions>
-                                <v-btn class="explore-btn" text color="blue accent-4" @click="reveal = true;">
+                                <v-btn class="explore-btn" text color="blue accent-4" @click="showCompany">
                                     Explore
                                 </v-btn>
                             </v-card-actions>
@@ -185,7 +185,7 @@
                                         </div>
                                     </v-card-text>
                                     <v-card-actions class="pt-0 float-end">
-                                        <v-btn class="close-btn" text color="red accent-4" @click="reveal = false">
+                                        <v-btn class="close-btn" text color="red accent-4" @click="showCompany">
                                             Close
                                         </v-btn>
                                     </v-card-actions>
@@ -265,6 +265,10 @@ export default {
                     });
             }
         },
+        showCompany() {
+            this.reveal = !this.reveal;
+            return;
+        }
     },
     mounted() {
         this.getAlumniDetails();

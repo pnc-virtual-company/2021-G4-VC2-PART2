@@ -155,6 +155,7 @@
                         label="Major"
                         outlined
                         required
+                        @change="selectMajor"
                         v-model="selectedMajor"
                         :rules="[(v) => !!v || 'Major is required']"
                       ></v-select>
@@ -581,7 +582,6 @@
           <v-card-text class="pb-0">
             <div class="d-flex">
               <v-avatar size="120">
-                
                 <img :src="companyProfile" alt="" />
               </v-avatar>
               <p class="text-h4 orange--text mt-5" style="margin-left: 20%">
@@ -659,7 +659,8 @@ export default {
     selectedMajor: "",
     selectedProvince: "",
     selectedStatus: "",
-    existSkill: [
+    existSkill: [],
+    webSkill: [
       "HTML",
       "CSS",
       "C++",
@@ -670,6 +671,20 @@ export default {
       "Java",
       "VueJs",
       "Vuetify",
+    ],
+    SNASkill: [
+      "Basic System Administration",
+      "Switching & Routing CCNA2",
+      "Basic Cloud Computing",
+      "IT HelpDesk",
+      "Switching & Routing CCNA3",
+      "Advance System Administration Part 1",
+      "Advance Cloud computing",
+      "Advance System Administration Part 2",
+      "Virtualization and Containerization",
+      "Cybersecurity",
+      "MikroTik",
+      "Network Infrastructure",
     ],
     skills: [],
     phone: "",
@@ -682,7 +697,7 @@ export default {
     menu: false,
     profileImage: null,
     personalInfo: localStorage.getItem("personalInfo"),
-    userRole : localStorage.getItem("role"),
+    userRole: localStorage.getItem("role"),
     userId: localStorage.getItem("id"),
     gender: ["Male", "Female"],
     status: [
@@ -802,6 +817,16 @@ export default {
     },
 
     // ____________ADD USER DETAIL__________ //
+    selectMajor(){
+      console.log(this.selectedMajor);
+      if(this.selectedMajor==='WEP'){
+        this.existSkill= this.webSkill
+      }
+      else{
+        this.existSkill=this.SNASkill
+      }
+
+    },
     addDetailInfo() {
       let userInfo = {
         user_id: localStorage.getItem("id"),
@@ -813,11 +838,9 @@ export default {
         skills: this.skills,
         phoneNumber: this.phone,
       };
-      console.log(userInfo.skills);
       axios
         .post("usersDetail", userInfo)
         .then(() => {
-         
           this.getDetailInfo();
           localStorage.setItem("personalInfo", true);
           localStorage.setItem("isSignUp", false);
@@ -833,7 +856,7 @@ export default {
     getCompanyDetailInfo() {
       axios.get("companies_detail/" + this.userId).then((res) => {
         this.companyInfo = res.data[0];
-        console.log(res.data[0])
+        console.log(res.data[0]);
         this.companyId = this.companyInfo.id;
         this.website = this.companyInfo.companyWebsite;
         this.address = this.companyInfo.companyLocation;
@@ -842,7 +865,9 @@ export default {
         this.company_email = this.companyInfo.companyEmail;
         this.company_tel = this.companyInfo.companyContact;
         this.companyName = this.companyInfo.companyName;
-        this.companyProfile = "http://127.0.0.1:8000/storage/images/companies/"+this.companyInfo.companyImage;
+        this.companyProfile =
+          "http://127.0.0.1:8000/storage/images/companies/" +
+          this.companyInfo.companyImage;
       });
     },
 
@@ -861,7 +886,7 @@ export default {
       axios
         .post("companies_detail", companyInfo)
         .then((res) => {
-           console.log(res.data)
+          console.log(res.data);
           this.getCompanyDetailInfo();
         })
         .catch((error) => {
@@ -909,7 +934,7 @@ export default {
       console.log(this.companyId);
     },
     isNotSignUp() {
-      if (this.personalInfo&&this.userRole=='Alumni') {       
+      if (this.personalInfo && this.userRole == "Alumni") {
         this.getDetailInfo();
         this.getCompanyDetailInfo();
       }
@@ -919,7 +944,7 @@ export default {
     this.username = localStorage.getItem("user");
     this.email = localStorage.getItem("email");
     this.batch = localStorage.getItem("batch");
-// this.getCompanyDetailInfo()
+    // this.getCompanyDetailInfo()
     this.isNotSignUp();
     this.getUser();
     this.getCompany();
