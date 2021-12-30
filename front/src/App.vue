@@ -8,19 +8,19 @@
         <v-app-bar-nav-icon @click.prevent="showNavigation = !showNavigation"></v-app-bar-nav-icon>
         <v-toolbar-title>ALUMNI - BOOK</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn :to="{ path: '/my_profile' }" class="mr-3" color="blue darken-2">
+        <v-btn v-show="userRole==='Alumni'" :to="{ path: '/my_profile' }" class="mr-3" color="blue darken-2">
             <v-icon left>mdi-account-multiple</v-icon>
             My Profile
         </v-btn>
-        <v-btn :to="{ path: '/explore_alumni' }" class="mr-3" color="blue darken-2">
+        <v-btn v-show="userRole==='ERO'" :to="{ path: '/explore_alumni' }" class="mr-3" color="blue darken-2">
             <v-icon left>mdi-school</v-icon>
             Explore Alumni
         </v-btn>
-        <v-btn :to="{ path: '/host_event' }" class="mr-3" color="blue darken-2">
-            <v-icon left>mdi-account-star</v-icon>
+        <v-btn v-show="userRole==='ERO'" :to="{ path: '/host_event' }" class="mr-3" color="blue darken-2">
+            <v-icon left>mdi-calendar-star</v-icon>
             Host Event
         </v-btn>
-        <v-btn :to="{ path: '/manage_user' }" class="mr-3" color="blue darken-2">
+        <v-btn v-show="userRole==='Admin'" :to="{ path: '/manage_user' }" class="mr-3" color="blue darken-2">
             <v-icon left>mdi-account-star</v-icon>
             Manage User
         </v-btn>
@@ -44,6 +44,7 @@ export default {
     },
     data() {
         return {
+            userRole : localStorage.getItem("role"),
             showNavigation: false,
             // _____SIGN IN AND SIGN UP______ //
             user: null,
@@ -69,8 +70,10 @@ export default {
     methods: {
         // ______________________LOGIN________________________ //
         logIn(users) {
+            console.log(users)
             axios.post('login', users)
                 .then(res => {
+                    console.log(res.data.user)
                     this.user = res.data.user.firstName;
                     this.email = res.data.user.email;
                     localStorage.setItem('user', this.user);
@@ -79,7 +82,9 @@ export default {
                     localStorage.setItem('id', res.data.user.id);
                     localStorage.setItem('personalInfo', true);
                     localStorage.setItem('isSignUp', false);
+                    localStorage.setItem('role', res.data.user.role);
                     this.$router.push('/My_profile');
+                    location.reload();
                 })
                 .catch(error => {
                     this.message_error = error.response.data.message;
@@ -110,12 +115,12 @@ export default {
                     localStorage.setItem('id', res.data.user.id);
                     localStorage.setItem('isSignUp', true);
                     localStorage.setItem('role', this.role);
+                    location.reload();
                 })
                 .catch(error => {
-                    console.log(error.response.data.message)
-                    this.email_error = error.response.data.errors.email;
+                    this.email_error = error.response.data.message;
                     this.password_error = error.response.data.errors.password;
-                    console.log(error.response.data);
+                    console.log(this.email_error);
                     localStorage.setItem('isSignUp', false);
                 });
         },

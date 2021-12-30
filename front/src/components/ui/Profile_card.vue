@@ -88,8 +88,9 @@
                             <v-text-field
                               v-model="date"
                               label="Birthday date"
-                              solo
+                              outlined
                               readonly
+                              dense
                               v-bind="attrs"
                               v-on="on"
                               :rules="[(v) => !!v || 'Date is required']"
@@ -118,7 +119,8 @@
                       <v-select
                         :items="gender"
                         label="Gender"
-                        solo
+                        outlined
+                        dense
                         required
                         v-model="selectedGender"
                         :rules="[(v) => !!v || 'Gender is required']"
@@ -128,7 +130,8 @@
                       <v-select
                         :items="status"
                         label="Marital Status"
-                        solo
+                        outlined
+                        dense
                         required
                         v-model="selectedStatus"
                         :rules="[(v) => !!v || 'Status is required']"
@@ -138,7 +141,8 @@
                       <v-select
                         :items="provinces"
                         label="Province"
-                        solo
+                        dense
+                        outlined
                         required
                         v-model="selectedProvince"
                         :rules="[(v) => !!v || 'Province is required']"
@@ -147,8 +151,9 @@
                     <v-col cols="12" sm="6" style="margin-top: -30px">
                       <v-select
                         :items="majors"
+                        dense
                         label="Major"
-                        solo
+                        outlined
                         required
                         v-model="selectedMajor"
                         :rules="[(v) => !!v || 'Major is required']"
@@ -157,10 +162,11 @@
                     <v-col cols="12" style="margin-top: -30px">
                       <v-autocomplete
                         v-model="skills"
+                        dense
                         :items="existSkill"
                         label="Skill"
                         multiple
-                        solo
+                        outlined
                         :rules="[(v) => !!v || 'Skill is required']"
                       ></v-autocomplete>
                     </v-col>
@@ -168,7 +174,8 @@
                       <v-text-field
                         label="Tel: 87 XXX XXX"
                         type="phone"
-                        solo
+                        outlined
+                        dense
                         required
                         v-model="phone"
                         :rules="[(v) => !!v || 'Tel is required']"
@@ -185,12 +192,14 @@
                       style="margin-top: 10px; width: 400px"
                     >
                       <v-autocomplete
-                        v-model="company"
-                        :items="states"
+                        v-model="companyId"
+                        :items="listCompany"
                         :filter="customFilter"
-                        color="white"
+                        color="blue"
+                        dense
                         solo
-                        item-text="name"
+                        item-text="companyName"
+                        item-value="id"
                         label="Select Your company"
                         @change="hello"
                       >
@@ -198,10 +207,13 @@
                           <v-chip>
                             <v-avatar left>
                               <v-img
-                                src="http://cdn.onlinewebfonts.com/svg/img_568656.png"
+                                :src="
+                                  'http://127.0.0.1:8000/storage/images/companies/' +
+                                  data.item.companyImage
+                                "
                               ></v-img>
                             </v-avatar>
-                            {{ data.item.name }}
+                            {{ data.item.companyName }}
                           </v-chip>
                         </template>
                       </v-autocomplete>
@@ -212,6 +224,8 @@
                         class="mx-2"
                         fab
                         dark
+                        dense
+                        outlined
                         color="#2196F3"
                       >
                         +
@@ -273,13 +287,16 @@
                             dark
                           >
                             Cancel
-                            <v-icon right dark>
-                              mdi-close-circle
-                            </v-icon></v-btn
-                          >
+                            <v-icon right dark> mdi-close-circle </v-icon>
+                          </v-btn>
                         </div>
                         <div>
-                          <v-btn @click="addCompany" x-small color="primary" dark>
+                          <v-btn
+                            @click="addCompany"
+                            x-small
+                            color="primary"
+                            dark
+                          >
                             Add Company
                             <v-icon right dark> mdi-arrow-right-circle </v-icon>
                           </v-btn>
@@ -291,7 +308,8 @@
                     <v-col cols="12" sm="6" style="margin-top: -30px">
                       <v-text-field
                         label="Company Website:"
-                        solo
+                        dense
+                        outlined
                         required
                         v-model="website"
                         :rules="[(v) => !!v || 'Website is required']"
@@ -300,7 +318,8 @@
                     <v-col cols="12" sm="6" style="margin-top: -30px">
                       <v-text-field
                         label="Address:"
-                        solo
+                        dense
+                        outlined
                         required
                         v-model="address"
                         :rules="[(v) => !!v || 'Address is required']"
@@ -309,7 +328,8 @@
                     <v-col cols="12" sm="6" style="margin-top: -30px">
                       <v-text-field
                         label="Position:"
-                        solo
+                        dense
+                        outlined
                         required
                         v-model="position"
                         :rules="[(v) => !!v || 'Position is required']"
@@ -318,7 +338,8 @@
                     <v-col cols="12" sm="6" style="margin-top: -30px">
                       <v-text-field
                         label="HR's name:"
-                        solo
+                        dense
+                        outlined
                         required
                         v-model="HR_name"
                         :rules="[(v) => !!v || 'Name is required']"
@@ -328,7 +349,8 @@
                       <v-text-field
                         label="Email: example@gmail.com"
                         type="email"
-                        solo
+                        dense
+                        outlined
                         required
                         v-model="company_email"
                         :rules="[(v) => !!v || 'Email is required']"
@@ -338,7 +360,8 @@
                       <v-text-field
                         label="Tel: 87 XXX XXX"
                         type="Tel"
-                        solo
+                        dense
+                        outlined
                         required
                         v-model="company_tel"
                         :rules="[(v) => !!v || 'Tel is required']"
@@ -411,20 +434,8 @@
         </v-btn>
       </div>
       <div align="center">
-        <v-avatar
-          v-if="user.userImage === null"
-          size="120"
-          class="profile ml-4 mt-4"
-        >
-          <img src="https://www.portal.chat/img/avatar.svg" alt="" />
-        </v-avatar>
-        <v-avatar v-else size="120" class="profile ml-4 mt-4">
-          <img
-            :src="
-              'http://127.0.0.1:8000/storage/images/users/' + user.userImage
-            "
-            alt=""
-          />
+        <v-avatar size="120" class="profile ml-4 mt-4">
+          <img :src="userImage" alt="" />
         </v-avatar>
         <!-- img dialog  -->
         <div>
@@ -502,8 +513,10 @@
         class="d-flex justify-center"
         style="margin-left: 40px; margin-top: 30px"
       >
-        <v-icon dark color="pink"> mdi-gender-female </v-icon>
-        <!-- <v-icon dark color="blue"> mdi-gender-male </v-icon> -->
+        <v-icon dark color="pink" class="mr-2" v-if="gender[1] === sex">
+          mdi-gender-female
+        </v-icon>
+        <v-icon dark color="blue" class="mr-2" v-else> mdi-gender-male </v-icon>
         <h2 class="mt-1 mr-12">{{ username }}</h2>
       </div>
       <div class="d-flex ma-1 mt-3">
@@ -568,10 +581,11 @@
           <v-card-text class="pb-0">
             <div class="d-flex">
               <v-avatar size="120">
-                <img src="../../assets/mangobyte.png" alt="" />
+                
+                <img :src="companyProfile" alt="" />
               </v-avatar>
-              <p class="text-h4 text--primary mt-3" style="margin-left: 22%">
-                {{ company }}
+              <p class="text-h4 orange--text mt-5" style="margin-left: 20%">
+                {{ companyName }}
               </p>
             </div>
             <h5 class="ml-2 blue--text text-decoration-underline">
@@ -607,7 +621,7 @@
               </div>
               <div class="d-flex" style="width: 36%">
                 <v-icon dark color="blue"> mdi-phone </v-icon>
-                <h3 class="ml-2 ml-3">Tel: {{ company_tel }}</h3>
+                <h3 class="ml-2 ml-3">Tel: +855 {{ company_tel }}</h3>
               </div>
             </div>
           </v-card-text>
@@ -632,6 +646,7 @@
 import axios from "../../axios-http";
 export default {
   data: () => ({
+    userImage: "https://www.portal.chat/img/avatar.svg",
     companyProfile:
       "https://png.pngtree.com/png-vector/20190418/ourlarge/pngtree-vector-office-building-icon-png-image_953174.jpg",
     imageView: "https://www.portal.chat/img/avatar.svg",
@@ -667,6 +682,7 @@ export default {
     menu: false,
     profileImage: null,
     personalInfo: localStorage.getItem("personalInfo"),
+    userRole : localStorage.getItem("role"),
     userId: localStorage.getItem("id"),
     gender: ["Male", "Female"],
     status: [
@@ -726,14 +742,8 @@ export default {
     HR_name: "",
     company_email: "",
     company_tel: "",
-    company: null,
-    states: [
-      { name: "hello", id: 1 },
-      { name: "hel", id: 2 },
-      { name: "hell", id: 3 },
-      { name: "heo", id: 4 },
-      { name: "he", id: 5 },
-    ],
+    companyId: null,
+    listCompany: null,
   }),
   watch: {
     menu(val) {
@@ -741,9 +751,6 @@ export default {
     },
   },
   methods: {
-    showCompanyForm() {
-      this.isAddCompany = !this.isAddCompany;
-    },
     // ____________SAVE DATE______________ //
     save(date) {
       this.$refs.menu.save(date);
@@ -752,7 +759,10 @@ export default {
     getUser() {
       axios.get("users/" + this.userId).then((res) => {
         this.user = res.data;
-        // console.log(this.user);
+        if (this.user.userImage != null) {
+          this.userImage =
+            "http://127.0.0.1:8000/storage/images/users/" + this.user.userImage;
+        }
       });
     },
     // ____________Set Image Profile_____________//
@@ -766,9 +776,9 @@ export default {
       UserDetail.append("_method", "PUT");
       axios
         .post("users/images/" + this.userId, UserDetail)
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
           this.getUser();
+          location.reload();
         })
         .catch((error) => {
           console.log(error.response.data.message);
@@ -807,6 +817,7 @@ export default {
       axios
         .post("usersDetail", userInfo)
         .then(() => {
+         
           this.getDetailInfo();
           localStorage.setItem("personalInfo", true);
           localStorage.setItem("isSignUp", false);
@@ -817,17 +828,21 @@ export default {
         });
     },
 
-    // ____________GET COMPANY DETAIL__________ //
+    // ____________GET COMPANY__________ //
+
     getCompanyDetailInfo() {
-      axios.get("companies/" + this.userId).then((res) => {
+      axios.get("companies_detail/" + this.userId).then((res) => {
         this.companyInfo = res.data[0];
-        this.company = this.companyInfo.companyName;
+        console.log(res.data[0])
+        this.companyId = this.companyInfo.id;
         this.website = this.companyInfo.companyWebsite;
         this.address = this.companyInfo.companyLocation;
         this.position = this.companyInfo.alumniPosition;
         this.HR_name = this.companyInfo.companyHR;
         this.company_email = this.companyInfo.companyEmail;
         this.company_tel = this.companyInfo.companyContact;
+        this.companyName = this.companyInfo.companyName;
+        this.companyProfile = "http://127.0.0.1:8000/storage/images/companies/"+this.companyInfo.companyImage;
       });
     },
 
@@ -835,7 +850,7 @@ export default {
     addCompanyDetailInfo() {
       let companyInfo = {
         user_id: localStorage.getItem("id"),
-        companyName: this.company,
+        company_id: this.companyId,
         alumniPosition: this.position,
         companyHR: this.HR_name,
         companyEmail: this.company_email,
@@ -844,34 +859,43 @@ export default {
         companyWebsite: this.website,
       };
       axios
-        .post("companies", companyInfo)
-        .then(() => {
-          // this.getCompanyDetailInfo();
+        .post("companies_detail", companyInfo)
+        .then((res) => {
+           console.log(res.data)
+          this.getCompanyDetailInfo();
         })
-        .then((error) => {
+        .catch((error) => {
           console.log(error);
         });
     },
     // __________________Add company___________________
+    getCompany() {
+      axios.get("companies/").then((res) => {
+        this.listCompany = res.data;
+      });
+    },
     setCompanyImg(event) {
       this.imgCompany = event.target.files[0];
       this.companyProfile = URL.createObjectURL(this.imgCompany);
     },
+    showCompanyForm() {
+      this.isAddCompany = !this.isAddCompany;
+    },
     addCompany() {
-      let NewCompany = new FormData()
-      NewCompany.append('companyImage',this.imgCompany);
-      NewCompany.append('companyName',this.companyName);
-      NewCompany.append('user_id',this.userID);
-
+      let NewCompany = new FormData();
+      NewCompany.append("companyImage", this.imgCompany);
+      NewCompany.append("companyName", this.companyName.toUpperCase());
+      NewCompany.append("user_id", this.userId);
       axios
-        .post("companies/" + this.userId,NewCompany )
+        .post("companies", NewCompany)
         .then((res) => {
           console.log(res.data);
+          this.isAddCompany = !this.isAddCompany;
+          this.getCompany();
         })
         .catch((error) => {
           console.log(error.response.data.message);
         });
-      
     },
     customFilter(item, queryText) {
       const textOne = item.name.toLowerCase();
@@ -881,18 +905,24 @@ export default {
 
       return textOne.indexOf(searchText) > -1;
     },
-    hello(df) {
-      console.log(df);
-      console.log(this.company);
+    hello() {
+      console.log(this.companyId);
+    },
+    isNotSignUp() {
+      if (this.personalInfo&&this.userRole=='Alumni') {       
+        this.getDetailInfo();
+        this.getCompanyDetailInfo();
+      }
     },
   },
   mounted() {
     this.username = localStorage.getItem("user");
     this.email = localStorage.getItem("email");
     this.batch = localStorage.getItem("batch");
-    this.getDetailInfo();
-    this.getCompanyDetailInfo();
+// this.getCompanyDetailInfo()
+    this.isNotSignUp();
     this.getUser();
+    this.getCompany();
   },
 };
 </script>
@@ -911,6 +941,7 @@ export default {
   top: 5px;
   right: 5px;
 }
+
 .edit_profile {
   position: absolute;
   top: 95px;
@@ -918,6 +949,7 @@ export default {
   text-align: center;
   margin-right: -100px;
 }
+
 #pro_img {
   border: 2px solid rgb(255, 255, 255);
   width: 80px;
@@ -925,33 +957,40 @@ export default {
   margin-left: 80px;
   border-radius: 50px;
 }
+
 #company_img {
   width: 80px;
   height: 80px;
   margin-left: 65px;
   border-radius: 50px;
 }
+
 .edit_profile:hover {
   color: gray;
   top: 95px;
   width: 45px;
   height: 45px;
 }
+
 .alumni-info-left,
 .alumni-info-center,
 .alumni-info-right {
   padding: 5px;
   margin: 10px;
 }
+
 .alumni-info-left {
   width: 28%;
 }
+
 .alumni-info-center {
   width: 34%;
 }
+
 .alumni-info-right {
   width: 38%;
 }
+
 .explore-btn {
   border-bottom: 4px solid rgb(105, 167, 248);
   border-radius: 0px;
@@ -960,12 +999,14 @@ export default {
   margin-top: -60px;
   position: absolute;
 }
+
 .close-btn {
   margin-right: 20px;
   margin-top: -10px;
   border-bottom: 4px solid red;
   border-radius: 0px;
 }
+
 .addCompanyForm {
   box-shadow: 0px 0px 14px 11px rgba(0, 0, 0, 0.42);
   -webkit-box-shadow: 0px 0px 14px 11px rgba(0, 0, 0, 0.42);
@@ -979,6 +1020,7 @@ export default {
   border-radius: 5px;
   position: absolute;
 }
+
 .camera {
   position: absolute;
   top: 80px;

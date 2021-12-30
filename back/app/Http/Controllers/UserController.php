@@ -65,7 +65,7 @@ class UserController extends Controller
 
         // Check password
         if (!$user || !Hash::check($request->password, $user->password)){
-            return response()->json(['message' => 'Incorrect Email or Password'], 401);
+            return response()->json(['message' => 'Email or Password is invalid'], 401);
         }
 
         // Create Token
@@ -87,11 +87,13 @@ class UserController extends Controller
     {
         //
         return User::all();
+        // return User::select('company_details.*', 'user_details.*', 'users.*', 'companies.*')->join('company_details', 'users.id', '=', 'company_details.user_id')->join('user_details', 'user_details.user_id', '=', 'users.id')->join('companies', 'companies.user_id', '=', 'users.id')->get();
     }
 
     function search($name)
     {
-        $result = User::where('firstName', 'LIKE', '%'. $name. '%')->get();
+        $result = User::where('firstName', 'LIKE', '%'. $name. '%')->join('user_details', 'user_details.user_id', '=', 'users.id')->join('companies', 'companies.user_id', '=', 'user_details.user_id')->join('company_details', 'company_details.user_id', '=', 'companies.user_id')->get();
+
         if(count($result)){
          return Response()->json($result);
         }
