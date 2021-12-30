@@ -20,7 +20,8 @@ Route::post('/login', [UserController::class, 'login']);
 Route::get('/users', [UserController::class, 'index']);
 Route::get('users/{id}', [UserController::class, 'show']);
 Route::put('/users/images/{id}', [UserController::class, 'updateImage']);
-Route::delete('users/{id}', [UserController::class, 'destroy']);
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
+Route::get('/users/search/{name}', [UserController::class, 'search']);
 
 // __________________USER DETAIL_______________ //
 Route::get('/usersDetail', [UserDetailController::class, 'index']);
@@ -39,14 +40,15 @@ Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
 // __________________COMPANY DETAIL_________________ //
 Route::get('/companies_detail', [CompanyDetailController::class, 'index']);
 Route::get('/companies_detail/{id}', [CompanyDetailController::class, 'show']);
+Route::get('/companies_user_detail/{id}', [CompanyDetailController::class, 'getOne']);
 Route::post('/companies_detail', [CompanyDetailController::class, 'store']);
-Route::put('/companies-detail/{id}', [CompanyDetailController::class, 'update']);
+Route::put('/companies_detail/{id}', [CompanyDetailController::class, 'update']);
 Route::delete('/companies_detail/{id}', [CompanyDetailController::class, 'destroy']);
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
 
-    Route::get('/users/search/{name}', [UsersController::class, 'search']);
     Route::put('users/{id}', [UserController::class, 'update']);
 
     Route::post('/logout', [UserController::class, 'logout']);
 });
+ 

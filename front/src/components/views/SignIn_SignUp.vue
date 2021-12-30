@@ -338,6 +338,9 @@ export default {
         listAllAlumni: [{
                 batch: "2021",
                 alumni: [{
+                        firstName: "sara",
+                        lastName: "vey",
+                    },{
                         firstName: "a",
                         lastName: "a",
                     },
@@ -495,7 +498,7 @@ export default {
                     this.batch = null;
                     this.firstName = null;
                     this.lastName = null;
-                }, 4000);
+                }, 2000);
             } else {
                 this.message = "Welcome back, Alumni.";
                 this.dialogColor = "success";
@@ -505,7 +508,7 @@ export default {
                     this.getValues();
                     this.namePart = !this.namePart;
                     this.questionPart = !this.questionPart;
-                }, 4000);
+                }, 2000);
             }
         },
         // ________________TO SIGN UP___________________ //
@@ -522,14 +525,14 @@ export default {
                 setTimeout(() => {
                     this.singUpPart = !this.singUpPart;
                     this.questionPart = !this.questionPart;
-                }, 3000);
+                }, 1500);
             } else {
                 this.spanMssColor = "red";
                 this.selectMessage = "Your choice is incorrect !";
                 setTimeout(() => {
                     this.selectMessage = null;
                     this.valueSelected = null;
-                }, 3000);
+                }, 1500);
                 this.getValues();
             }
         },

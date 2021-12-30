@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Models\CompanyDetail;
+use App\Models\CompanyDetail;
 
 class CompanyDetailController extends Controller
 {
@@ -14,13 +14,25 @@ class CompanyDetailController extends Controller
      */
     public function index()
     {
-        return CompanyDetail::latest()->get();
+        return CompanyDetail::select('company_details.*', 'user_details.*', 'users.*', 'companies.*')->join('users', 'users.id', '=', 'company_details.user_id')->join('user_details', 'user_details.user_id', '=', 'users.id')->join('companies', 'company_details.company_id', '=', 'companies.id')->get();
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getOne($id)
+    {
+        return CompanyDetail::select('company_details.*', 'user_details.*', 'users.*', 'companies.*')->join('users', 'users.id', '=', 'company_details.user_id')->join('user_details', 'user_details.user_id', '=', 'users.id')->join('companies', 'companies.user_id', '=', 'user_details.user_id')->where('users.id', $id)->get();
+        
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request 
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -64,11 +76,12 @@ class CompanyDetailController extends Controller
      */
     public function show($id)
     {
-        return CompanyDetail::findOrFail($id);
+        // return CompanyDetail::get();
+        return CompanyDetail::select('company_details.*','companyName','companyImage')->join('companies', 'company_details.company_id', '=', 'companies.id')->where('company_details.user_id',$id)->get();
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage. 
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id

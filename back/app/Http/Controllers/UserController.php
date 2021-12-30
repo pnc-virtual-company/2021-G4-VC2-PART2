@@ -87,11 +87,13 @@ class UserController extends Controller
     {
         //
         return User::all();
+        // return User::select('company_details.*', 'user_details.*', 'users.*', 'companies.*')->join('company_details', 'users.id', '=', 'company_details.user_id')->join('user_details', 'user_details.user_id', '=', 'users.id')->join('companies', 'companies.user_id', '=', 'users.id')->get();
     }
 
     function search($name)
     {
-        $result = User::where('firstName', 'LIKE', '%'. $name. '%')->get();
+        $result = User::where('firstName', 'LIKE', '%'. $name. '%')->join('user_details', 'user_details.user_id', '=', 'users.id')->join('companies', 'companies.user_id', '=', 'user_details.user_id')->join('company_details', 'company_details.user_id', '=', 'companies.user_id')->get();
+
         if(count($result)){
          return Response()->json($result);
         }
@@ -163,15 +165,37 @@ class UserController extends Controller
         // create User
         $user =  User::findOrFail($id);
 
-        // store image
-        $user->userImage = $request->file('userImage')->hashName();
-        $request->file('userImage')->store('public/images/users');
+        if($request->file('userImage')!=''){
+            $path = public_path()."/storage/images/users/";
+            $file = $request->userImage;
+            $fileName = $file->getClientOriginalName();
+            if($user->userImage!='' && $user->userImage!= null && $user->userImage!=[]){
+                $oldImg = $path.$user->userImage;
+                unlink($oldImg);
+                $user->userImage = $fileName;
+            }
+            else{
+                $user->userImage = $fileName;
+            }
+            
+            $file->move($path,$fileName);
+            $user->update(['userImage'=>$fileName]);
+            $user->save();
+            return response()->json([
+                'user' => $user,
+                'message' => 'Update Image successfully',
+            ]);
 
-        $user->save();
-
+        }
+        else{
+            $user->userImage = $request->file();
+            $user->save();
+        }
+        
+        
         return response()->json([
             'user' => $user,
-            'message' => 'User Image Updated',
+            'message' => 'Image not found',
         ]);
     }
 
