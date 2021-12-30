@@ -173,16 +173,16 @@ export default {
             axios.post("signup", eroUser)
                 .then(() => {
                     this.getUser();
+                    // ____CLEAR INPUT____ //
+                    eroUser.firstName = '',
+                    eroUser.lastName = '',
+                    eroUser.email = '',
+                    eroUser.password = '',
+                    eroUser.password_confirmation = ''
                 })
                 .catch((err) => {
                     console.log(err.response.data.message);
                 });
-                // ____CLEAR INPUT____ //
-            eroUser.firstName = '',
-            eroUser.lastName = '',
-            eroUser.email = '',
-            eroUser.password = '',
-            eroUser.password_confirmation = ''
         },
         // ________________________GET USER_______________________ //
         getUser() {
