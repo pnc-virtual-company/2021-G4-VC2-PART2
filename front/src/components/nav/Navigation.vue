@@ -9,12 +9,18 @@
 
         <h4 class="d-flex justify-center mt-4 mb-2">{{ userName }}</h4>
 
-        <v-list-item v-show="userRole==='Admin'" :to="{ path: '/my_profile' }">
-            <v-list-item-icon>
-                <v-icon>mdi-security</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Admin</v-list-item-title>
-        </v-list-item>
+      <v-list-item v-show="userRole==='ERO'" :to="{ path: '/explore_alumni' }">
+        <v-list-item-icon>
+          <v-icon>mdi-account</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>ERO Officer</v-list-item-title>
+      </v-list-item>
+      <v-list-item v-show="userRole==='Alumni'"   :to="{ path: '/my_profile' }">
+        <v-list-item-icon>
+          <v-icon>mdi-school</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>Alumni</v-list-item-title>
+      </v-list-item>
 
         <v-list-item v-show="userRole==='ERO'" :to="{ path: '/explore_alumni' }">
             <v-list-item-icon>

@@ -1,14 +1,23 @@
 <template>
     <section>
-        <profile-card class="mt-3"></profile-card>
+        {{isSignUp}}
+        <signin-profile-card v-if="!isSignUp" class="mt-3"></signin-profile-card>
+        <signup-profile-card v-else class="mt-3"></signup-profile-card>
     </section>
 </template>
 
 <script>
-import Profile_card from "../ui/Profile_card.vue";
+import SignUp_card from "../ui/Signup_profile_card.vue";
+import SignIn_card from "../ui/Signin_profile_card.vue";
 export default {
     components: {
-        'profile-card': Profile_card,
-    }
+        'signup-profile-card': SignUp_card,
+        'signin-profile-card': SignIn_card,
+    },
+    data() {
+        return {
+            isSignUp:JSON.parse(localStorage.getItem('isSignUp'))
+        }
+    },
 }
 </script>
