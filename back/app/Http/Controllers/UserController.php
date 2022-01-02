@@ -95,12 +95,12 @@ class UserController extends Controller
         $result = User::where('firstName', 'LIKE', '%'. $name. '%')->join('user_details', 'user_details.user_id', '=', 'users.id')->join('companies', 'companies.user_id', '=', 'user_details.user_id')->join('company_details', 'company_details.user_id', '=', 'companies.user_id')->get();
 
         if(count($result)){
-         return Response()->json($result);
+            return Response()->json($result);
         }
         else
         {
-        return response()->json(['Result' => 'No Data not found'], 404);
-      }
+            return response()->json(['Result' => 'No Data not found'], 404);
+        }
     }
 
 

@@ -1,35 +1,30 @@
 <template>
 <section>
     <!-- Search and Sort -->
-    <div class="search">
-        <input type="search" class="search_input" placeholder="Search ..." v-model="search_name" @keyup="search">
-        <i class="fas fa-search"></i>
-    </div>
-    <div class="select-group">
-        <select class="filter_batch">
-            <option disabled value="">Batch</option>
-            <option>
-                Batch
-            </option>
-        </select>
-        <select class="filter_major">
-            <option disabled value="">Major</option>
-            <option>
-                Major
-            </option>
-        </select>
-        <select class="filter_position">
-            <option disabled value="">Position</option>
-            <option>
-                Position
-            </option>
-        </select>
+    <div class="search-and-sort">
+        <div class="search">
+            <input type="search" class="search_input" placeholder="Search ..." v-model="search_name" @keyup="search" />
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="select-group">
+            <select class="filter_batch">
+                <option disabled value="">Batch</option>
+                <option>Batch</option>
+            </select>
+            <select class="filter_major">
+                <option disabled value="">Major</option>
+                <option>Major</option>
+            </select>
+            <select class="filter_position">
+                <option disabled value="">Position</option>
+                <option>Position</option>
+            </select>
+        </div>
     </div>
     <!-- End Search and Sort -->
 
-    <div class="d-flex flex-wrap">
-        <!-- Start Card -->
-        <v-card class="ml-11 mr-5 mt-5 mb-5 rounded-lg" max-width="370" outlined dense elevation="6" v-for="(user, index) in users" :key="index">
+    <!-- 
+    <v-card class="ml-11 mr-5 mt-5 mb-5 rounded-lg" max-width="370" outlined dense elevation="6" v-for="(user, index) in users" :key="index">
             <div>
                 <v-list-item three-line>
                     <v-list-item-content>
@@ -48,7 +43,6 @@
                         </div>
                     </v-list-item-content>
                     <div style="margin-top: -40px">
-                        
 
                          <v-avatar v-if="user.userImage === null" size="80" class="profile ml-4 mt-4">
                                     <img src="https://www.portal.chat/img/avatar.svg" alt="" />
@@ -66,9 +60,9 @@
                     <p style="margin-top: -10px">HR: {{ user.companyHR }}</p>
                     <p style="margin-top: -10px">Email: {{ user.companyEmail }}</p>
                     <p style="margin-top: -10px" class="mb-0">Tel: +855 {{ user.companyContact }}</p>
-                </div>
-                <!-- Dialog -->
-                <v-row class="float-end mt-1 mb-1 mr-2">
+                </div> -->
+    <!-- Dialog -->
+    <!-- <v-row class="float-end mt-1 mb-1 mr-2">
                     <v-dialog v-model="dialog" ftransition="dialog-bottom-transition" max-width="850" max-height="600">
                         <template v-slot:activator="{ on, attrs }">
                             <v-card-actions>
@@ -76,9 +70,9 @@
                                     Detail
                                 </v-btn>
                             </v-card-actions>
-                        </template>
-                        <!-- Start Card -->
-                        <v-card class="mx-auto rounded-lg" max-width="850" dense elevation="5" height="100%">
+                        </template> -->
+    <!-- Start Card -->
+    <!-- <v-card class="mx-auto rounded-lg" max-width="850" dense elevation="5" height="100%">
                             <div align="center">
                                 <v-avatar v-if="eachUserDetails.userImage === null" size="120" class="profile ml-4 mt-4">
                                     <img src="https://www.portal.chat/img/avatar.svg" alt="" />
@@ -145,7 +139,7 @@
                                 <v-card v-if="reveal" class="transition-fast-in-fast-out v-card--reveal" style="height: 100%">
                                     <v-card-text class="pb-0">
                                         <div class="d-flex">
-                                            
+
                                             <v-avatar size="120">
                                                 <img :src="'http://127.0.0.1:8000/storage/images/companies/' + eachUserDetails.companyImage" alt="" />
                                             </v-avatar>
@@ -191,27 +185,74 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-expand-transition>
-                        </v-card>
-                        <!-- End Card -->
-                    </v-dialog>
-                </v-row>
-                <!-- End Dialog -->
-            </div>
-        </v-card>
-        <!-- End Card -->
+                        </v-card> -->
+    <!-- End Card -->
+    <!-- </v-dialog>
+                </v-row> -->
+    <!-- End Dialog -->
+    <!-- </div>
+        </v-card> -->
+    <!-- End Card -->
+
+    <div class="d-flex pa-12" v-for="(user, index) in users" :key="index">
+        <!-- Start Card -->
+        <v-row justify="center" class="expansion-row">
+            <v-expansion-panels inset>
+                <v-expansion-panel>
+                    <v-expansion-panel-header>
+                        <div>
+                            <div class="header d-flex justify-space-between rounded-lg">
+                                <h4> {{user.batch}} </h4>
+                                <h4> {{user.major}} </h4>
+                            </div>
+
+                            <div class="personal-information d-flex mt-5">
+                                <div class="profile">
+                                    <v-avatar size="120">
+                                        <img :src="'http://127.0.0.1:8000/storage/images/users/' + user.userImage" alt="">
+                                    </v-avatar>
+                                    <div class="d-flex">
+                                        <v-icon dark color="pink" class="mr-2 mt-2" v-if="eachUserDetails.gender === 'Female'"> mdi-gender-female </v-icon>
+                                        <v-icon dark color="blue" class="mr-2 mt-2" v-else> mdi-gender-male </v-icon>
+                                        <h3 class="mt-3">{{user.firstName}}</h3>
+                                    </div>
+                                </div>
+
+                                <div class="detail">
+                                    <div class="d-flex">
+                                        <v-avatar size="50">
+                                            <img :src="'http://127.0.0.1:8000/storage/images/companies/' + user.companyImage" alt="">
+                                        </v-avatar>
+                                        <h4 class="mt-5 ml-2 orange--text">{{user.companyName}}</h4>
+                                    </div>
+                                    <p class="mt-4 orange--text">Position <span class="ml-3 mr-3"> : </span> <span class="black--text">{{user.alumniPosition}}</span></p>
+                                    <p class="orange--text">Skills <span class="ml-8 mr-3"> : </span> <span class="black--text">{{user.skills}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                        enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                        nisi ut aliquip ex ea commodo consequat.
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
+        </v-row>
     </div>
 </section>
 </template>
 
 <script>
-import axios from '../../axios-http';
+import axios from "../../axios-http";
 export default {
     data: () => ({
-        items: ['Explore as much as you like !'],
+        items: ["Explore as much as you like !"],
         users: [],
         eachUserDetails: [],
-        search_name: '',
-        // __________Dialog__________ // 
+        search_name: "",
+        // _________Dialog_________ //
         reveal: false,
         dialog: false,
         notifications: false,
@@ -219,48 +260,52 @@ export default {
         widgets: false,
     }),
     methods: {
-        // _______________GET ALUMNI DETAILS________________ //
+        // ______________GET ALUMNI DETAILS_______________ //
         getAlumniDetails() {
-            axios.get('companies_detail')
-                .then(res => {
+            axios
+                .get("companies_detail")
+                .then((res) => {
                     this.users = res.data;
-                    console.log(this.users)
+                    console.log(this.users);
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log(error.data);
                 });
         },
-        // _______________GET ONE ALUMNI DETAILS________________ //
+        // ______________GET ONE ALUMNI DETAILS_______________ //
         getOneAlumniDetails(id) {
-          console.log(id);
-            axios.get('companies_user_detail/' + id)
-                .then(res => {
+            console.log(id);
+            axios
+                .get("companies_user_detail/" + id)
+                .then((res) => {
                     this.eachUserDetails = res.data[0];
                     console.log(this.eachUserDetails);
-                    // console.log(this.eachUserDetails.userImage);/ 
+                    // console.log(this.eachUserDetails.userImage);/
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log(error);
                 });
         },
-        // _______________SEARCH USER________________ //
-        search(){
-            if (this.search_name != ''){
-                axios.get('users/search/' + this.search_name)
-                    .then(res => {
+        // ______________SEARCH USER_______________ //
+        search() {
+            if (this.search_name != "") {
+                axios
+                    .get("users/search/" + this.search_name)
+                    .then((res) => {
                         this.users = res.data;
                         console.log(this.users);
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         console.log(error);
                     });
             } else {
-                axios.get('companies_detail')
-                    .then(res => {
+                axios
+                    .get("companies_detail")
+                    .then((res) => {
                         this.users = res.data;
                         console.log(this.users);
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         console.log(error);
                     });
             }
@@ -268,12 +313,12 @@ export default {
         showCompany() {
             this.reveal = !this.reveal;
             return;
-        }
+        },
     },
     mounted() {
         this.getAlumniDetails();
-    }
-}
+    },
+};
 </script>
 
 <style scoped>
@@ -285,25 +330,32 @@ export default {
     color: white;
 }
 
+.search-and-sort {
+    position: sticky;
+    top: 64px;
+    z-index: 99;
+    background: white;
+}
+
 .search_input {
     height: 40px;
     width: 50%;
     border-radius: 7px;
     text-align: center;
-    border: 2px solid #2196F3;
-    outline: #2196F3;
-    color: #2196F3;
+    border: 2px solid #2196f3;
+    outline: #2196f3;
+    color: #2196f3;
 }
 
 .search_input::placeholder {
-    color: #2196F3;
+    color: #2196f3;
 }
 
-.fas{
+.fas {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #2196F3;
+    background: #2196f3;
     height: 40px;
     width: 50px;
     color: white;
@@ -323,6 +375,10 @@ export default {
     margin-bottom: 15px;
     margin-right: 5%;
     margin-left: 5%;
+    position: sticky;
+    top: 120px;
+    z-index: 99;
+    background: white;
 }
 
 .filter_batch,
@@ -331,7 +387,7 @@ export default {
     width: 7%;
     height: 40px;
     border-radius: 5px;
-    background: #2196F3;
+    background: #2196f3;
     border: 1px solid white;
 }
 
@@ -344,7 +400,7 @@ select {
 
 option {
     background: rgb(214, 214, 214);
-    color: black
+    color: black;
 }
 
 /* Card */
@@ -355,8 +411,8 @@ option {
     width: 100%;
 }
 
-/* /Profile Card /  */
-.edit-btn {
+/* Profile card */
+/* .edit-btn {
     position: absolute;
     top: 5px;
     right: 5px;
@@ -447,5 +503,25 @@ option {
     width: 100%;
     margin-right: -20px;
     padding-right: -20px;
+} */
+
+/* Expansion Panel */
+.header {
+    background: #2196F3;
+    padding: 10px;
+    color: white;
+}
+
+.profile,
+.detail {
+    width: 40%;
+}
+
+.detail {
+    width: 60%;
+}
+
+.expansion-row {
+    width: 30%;
 }
 </style>

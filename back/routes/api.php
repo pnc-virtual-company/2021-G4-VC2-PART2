@@ -33,6 +33,7 @@ Route::delete('/usersDetail/{id}', [UserDetailController::class, 'destroy']);
 // __________________COMPANY___________________ //
 Route::get('/companies', [CompanyController::class, 'index']);
 Route::get('/companies/{id}', [CompanyController::class, 'show']);
+Route::get('/companies/search/{name}', [CompanyController::class, 'search']);
 Route::post('/companies', [CompanyController::class, 'store']);
 Route::put('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
@@ -51,4 +52,3 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::post('/logout', [UserController::class, 'logout']);
 });
- 
