@@ -20,7 +20,7 @@ const routes = [
   { path: "/unauthorized_access", component: Unauthorized},
   { path: "/*", component: Notfound},
 
-  { path: "/", redirect: "/my_profile" },
+  { path: "/my_profile", redirect: "/my_profile" },
 ]
 
 let authenticationGuard = (to, from, next) => {
@@ -33,16 +33,16 @@ let authenticationGuard = (to, from, next) => {
     if (!localStorage.id) {
       next("/")
     } else {
-      if (to.path === "/") {
-        next("/");
+      if (to.path === '/'){
+        next("/my_profile");
       } else {
         next();
-      }
+      }  
     }
   } else {
     if (localStorage.id) {
       if (to.path === "/") {
-        next("/");
+        next("/my_profile");
       }
     }
   }

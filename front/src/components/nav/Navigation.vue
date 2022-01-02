@@ -59,7 +59,7 @@
                             </v-btn>
                             <v-spacer></v-spacer>
                             <v-btn color="primary" text @click="dialog = false; logOut()">
-                                I accept
+                                Log out
                             </v-btn>
                         </v-card-actions>
                     </v-card>
