@@ -1,10 +1,5 @@
 <template>
 <div>
-    <div style=" display: block; margin-left:45.6%; width:40px;">
-        <img width="90" src="../../assets/pnc.png" alt="logoImage" />
-    </div>
-    <h2 style="text-align:center; font-family:dense; font-size:20px">Passerelles Numeriques Cambodia</h2>
-    
     <div>
         <v-row justify="space-around">
             <v-col cols="auto">
@@ -48,7 +43,7 @@
                 </v-dialog>
             </v-col>
         </v-row>
-        <v-simple-table>
+        <!-- <v-simple-table>
             <template v-slot:default>
                 <thead>
                     <tr class="text-center">
@@ -101,7 +96,30 @@
                     </tr>
                 </tbody>
             </template>
-        </v-simple-table>
+        </v-simple-table> -->
+<v-data-table
+    :headers="headers"
+    :items="users"
+    sort-by="calories"
+    class="elevation-1 ma-12"
+
+  >
+  <template v-slot:[`item.profile`]="{ item }">
+      <img v-if="item.userImage===null" class="profileImg" width="40px" height="40px" src="https://www.portal.chat/img/avatar.svg" alt="Profile Imag">
+      <img v-else class="profileImg" width="40px" height="40px" :src="'http://127.0.0.1:8000/storage/images/users/'+item.userImage" alt="Profile Imag">
+      
+    </template>
+    
+    <template v-slot:[`item.actions`]="{ item }">
+      <v-icon
+        small
+        @click="deleteUser(item.id)"
+      >
+        mdi-delete
+      </v-icon>
+    </template>
+    
+  </v-data-table>
     </div>
 </div>
 </template>
@@ -111,6 +129,20 @@ import axios from "../../axios-http";
 export default {
     data() {
         return {
+            headers: [
+        {
+          text: 'Profile',
+          align: 'start',
+          sortable: false,
+          value: 'profile',
+          
+        },
+        { text: 'First Name', value: 'firstName' },
+        { text: 'Last Name', value: 'lastName' },
+        { text: 'Role', value: 'role' },
+        { text: 'Email', value: 'email' },
+        { text: 'Actions', value: 'actions', sortable: false  },
+      ],
             dialog: false,
             deleteDialog: false,
             todos: [],
@@ -137,7 +169,9 @@ export default {
                 .toISOString()
                 .substr(0, 10),
             users: [],
-            hiddenBtn: 0
+            hiddenBtn: 0,
+            // new ____
+            dialogDelete: false,
         };
     },
     methods: {
@@ -196,12 +230,14 @@ export default {
         },
         // _________________________DELETE USER_______________________ //
         deleteUser(id) {
+            console.log(id)
             axios.delete("users/" + id)
-                .then((res) => {
+                .then(() => {
                     this.getUser();
-                    this.users = res.data;
                 })
         },
+        // --------------new --------------
+
     },
     mounted() {
         this.getUser();
@@ -210,4 +246,8 @@ export default {
 </script>
 
 <style scoped>
+.profileImg{
+    margin-top: 6px;
+    border-radius: 40px;
+}
 </style>

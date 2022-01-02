@@ -25,7 +25,7 @@
         </v-list-item-icon>
         <v-list-item-title>ERO Officer</v-list-item-title>
       </v-list-item>
-      <v-list-item v-show="userRole==='Alumni'"   :to="{ path: '/manage_user' }">
+      <v-list-item v-show="userRole==='Alumni'"   :to="{ path: '/my_profile' }">
         <v-list-item-icon>
           <v-icon>mdi-school</v-icon>
         </v-list-item-icon>
