@@ -139,7 +139,7 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         $com = Company::destroy($id);
-       
+
         if ($com === 1) {
             return response()->json(['message' => 'deleted successfully'], 200);
         } else {

@@ -60,7 +60,6 @@
                         </div>
                     </v-list-item-content>
                     <div style="margin-top: -40px">
-                        
 
                          <v-avatar v-if="user.userImage === null" size="80" class="profile ml-4 mt-4">
                                     <img src="https://www.portal.chat/img/avatar.svg" alt="" />
@@ -157,7 +156,7 @@
                                 <v-card v-if="reveal" class="transition-fast-in-fast-out v-card--reveal" style="height: 100%">
                                     <v-card-text class="pb-0">
                                         <div class="d-flex">
-                                            
+
                                             <v-avatar size="120">
                                                 <img :src="'http://127.0.0.1:8000/storage/images/companies/' + eachUserDetails.companyImage" alt="" />
                                             </v-avatar>
@@ -427,6 +426,13 @@ export default {
   margin-bottom: 20px;
   justify-content: center;
   color: white;
+}
+
+.search-and-sort {
+    position: sticky;
+    top: 64px;
+    z-index: 99;
+    background: white;
 }
 
 .search_input {
