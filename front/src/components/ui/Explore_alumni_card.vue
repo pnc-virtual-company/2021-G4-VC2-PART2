@@ -1,32 +1,33 @@
 <template>
 <section>
-    <div align="center"><img src="../../assets/pn-logo.png" alt="" width="35px" height="35px" class="rounded-circle mr-1" />
-        <h6>Passerelles Numeriques</h6>
-    </div>
     <!-- Search and Sort -->
     <div>
-        <div class='alumni-top'>
+        <div class="alumni-top">
             <div class="search">
                 <input type="search" class="search_input" placeholder="Search ..." v-model="search_name" @keyup="search" />
                 <i class="fas fa-search"></i>
             </div>
-            <div class="select-group">
-                <select class="filter_batch">
-                    <option disabled value="">Batch</option>
-                    <option>Batch</option>
-                </select>
-                <select class="filter_major">
-                    <option disabled value="">Major</option>
-                    <option>Major</option>
-                </select>
-                <select class="filter_position">
-                    <option disabled value="">Position</option>
-                    <option>Position</option>
-                </select>
-            </div>
+            <v-row class="ml-12 mr-12">
+                <v-col>
+                    <v-select class="filter_batch" v-model="batch" @change="sort('batch', batch)" :items="listBatch" label="Batch" dense solo></v-select>
+                </v-col>
+                <v-col>
+                    <v-select class="filter_city" v-model="city" :items="ListCity" @change="sort('city', city)" label="City" dense solo></v-select>
+                </v-col>
+                <v-col>
+                    <v-select class="filter_company" v-model="companyName" @change="sort('company_id', companyName)" :items="listCompany" item-text="companyName" item-value="companyName" label="Company" dense solo></v-select>
+                </v-col>
+                <v-col>
+                    <v-select class="filter_major" v-model="major" @change="sort('major', major)" :items="listMajor" label="Major" dense solo></v-select>
+                </v-col>
+            </v-row>
         </div>
     </div>
     <!-- End Search and Sort -->
+
+    <div v-if="!isDataAvailable" align="center" class="mt-12">
+        <h2>No Data Available</h2>
+    </div>
 
     <div class="d-flex flex-wrap pa-12">
         <!-- Start Card -->
@@ -49,7 +50,7 @@
                           user.userImage
                         " alt="" />
                                     </v-avatar>
-                                    <v-list-item-title class="text-h6" align="center" style="margin-bottom: -40px;color:#2196F3">
+                                    <v-list-item-title class="text-h6" align="center" style="margin-bottom: -40px; color: #2196f3">
                                         {{ user.firstName }}
                                     </v-list-item-title>
                                 </div>
@@ -152,6 +153,7 @@
 
 <script>
 import axios from "../../axios-http";
+import City from "../json/City.json";
 export default {
     data: () => ({
         items: ["Explore as much as you like !"],
@@ -168,7 +170,18 @@ export default {
         pagination: {
             current: 1,
             total: 0
-        }
+        },
+        // __________Sort____________//
+        listMajor: ["WEP", "SNA"],
+        listBatch: [2018, 2019, 2020, 2021],
+        listUser: [],
+        major: "",
+        batch: "",
+        companyName: "",
+        city: "",
+        listCompany: [],
+        ListCity: City,
+        isDataAvailable: true,
     }),
     methods: {
         // _______________PAGINATION________________ //
@@ -176,6 +189,7 @@ export default {
             axios.get('companies_detail?page=' + this.pagination.current)
                 .then(response => {
                     this.users = response.data.data;
+                    this.listUser = response.data.data;
                     this.pagination.current = response.data.current_page;
                     this.pagination.total = response.data.last_page;
                 });
@@ -213,8 +227,8 @@ export default {
             this.reveal = !this.reveal;
             return;
         },
-        // _______________ALUMNI SKILL_________________ //
-        skill(skills) {
+        // ______________ALUMNI SKILL________________ //
+        skill(skills, major) {
             let stringArray = "";
             for (let n of skills) {
                 if (n !== "[" && n !== '"' && n !== "]") {
@@ -222,15 +236,78 @@ export default {
                 }
             }
             let skill = stringArray.split(",");
-            let skillLength = skill.length - 2;
-            if (skill.length > 2) {
-                return skill[0] + "|" + skill[1] + " and " + skillLength + ' other.'
+            let wepSkillLength = skill.length - 2;
+            let snaSkillLength = skill.length - 1;
+            let result = "";
+            if (major == "WEP") {
+                if (skill.length > 2) {
+                    result =
+                        skill[0] + "|" + skill[1] + " and " + wepSkillLength + " others.";
+                } else {
+                    result = skill[0] + "|" + skill[1];
+                }
             } else {
-                return skill[0] + "|" + skill[1]
+                if (skill.length > 1) {
+                    result = skill[0] + " and " + snaSkillLength + " orthers.";
+                } else {
+                    result = skill[0];
+                }
+            }
+            return result;
+        },
+        //__________________ sort ___________________//
+        getCompany() {
+            axios.get("/companies").then((res) => {
+                this.listCompany = res.data;
+            });
+        },
+        sort(typeOfSort, key) {
+            this.users = [];
+            this.isDataAvailable = true
+            let isHasData = false
+            for (let user of this.listUser) {
+                if (typeOfSort === "batch") {
+                    if (user.batch == key) {
+                        this.users.push(user);
+                        isHasData = true
+                    }
+                    this.city = "";
+                    this.companyName = "";
+                    this.major = "";
+                } else if (typeOfSort === "city") {
+                    if (user.city == key) {
+                        this.users.push(user);
+                        isHasData = true
+                    }
+                    this.batch = "";
+                    this.companyName = "";
+                    this.major = "";
+                } else if (typeOfSort === "major") {
+                    if (user.major == key) {
+                        this.users.push(user);
+                        isHasData = true
+                    }
+                    this.batch = "";
+                    this.companyName = "";
+                    this.city = "";
+                } else {
+                    if (user.companyName == key) {
+                        this.users.push(user);
+                        isHasData = true
+                    }
+                    this.batch = "";
+                    this.major = "";
+                    this.city = "";
+                }
+
+            }
+            if (!isHasData) {
+                this.isDataAvailable = false
             }
         },
     },
     mounted() {
+        this.getCompany();
         this.getAlumni();
     },
 };
@@ -294,12 +371,26 @@ export default {
 
 .filter_batch,
 .filter_major,
-.filter_position {
-    width: 7%;
+.filter_company,
+.filter_city {
     height: 40px;
     border-radius: 5px;
-    background: #2196f3;
-    border: 1px solid white;
+}
+
+.filter_batch {
+    width: 80%;
+}
+
+.filter_major {
+    width: 80%;
+}
+
+.filter_company {
+    width: 80%;
+}
+
+.filter_city {
+    width: 80%;
 }
 
 select {
