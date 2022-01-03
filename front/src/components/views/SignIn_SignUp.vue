@@ -291,7 +291,7 @@
 </template>
 
 <script>
-import json from "../json/PncValues.json";
+import PncValues from "../json/PncValues.json";
 export default {
     emits: ["signin", "signup"],
     props: ["error", "emailError", "passwordError"],
@@ -300,7 +300,7 @@ export default {
         defaultSignUpTimes: 2,
         signUpTimes: 0,
         randomIndex: 0,
-        pncValues: json,
+        pncValues: PncValues,
         realValues: [
             "Respect",
             "Responsible",

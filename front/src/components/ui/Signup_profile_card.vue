@@ -409,6 +409,8 @@
 <script>
 import axios from "../../axios-http";
 import SignIn_card from "../ui/Signin_profile_card.vue";
+import City from "../json/City.json";
+import Status from "../json/Status.json";
 export default {
   components:{
             'signin-profile-card': SignIn_card,
@@ -464,42 +466,9 @@ export default {
     profileImage: null,
     userId: localStorage.getItem("id"),
     gender: ["Male", "Female"],
-    status: [
-      "Single",
-      "Registered partnership",
-      "Married",
-      "Widowed",
-      "Divorced",
-      "Separated",
-    ],
+    status: Status,
     majors: ["WEP", "SNA"],
-    provinces: [
-      "Phnom Penh",
-      "Banteay Meanchey",
-      "Battambang",
-      "Kampong Cham",
-      "Kampong Chhnang",
-      "Kampong Speu",
-      "Kampong Thom",
-      "Kampot",
-      "Kandal",
-      "Koh Kong",
-      "Kep",
-      "Kratie",
-      "Mondulkiri",
-      "Oddar Meanchey",
-      "Pailin",
-      "Preah Sihanouk",
-      "Preah Vihear",
-      "Pursat",
-      "Prey Veng",
-      "Ratanakiri",
-      "Siem Reap",
-      "Stung Treng",
-      "Svay Rieng",
-      "Takeo",
-      "Tbong Khmum",
-    ],
+    provinces: City,
     // ____________ADD COMPANY____________ //
     isAddCompany: false,
     companyName: null,
