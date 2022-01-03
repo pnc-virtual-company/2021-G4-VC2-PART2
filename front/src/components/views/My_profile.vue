@@ -1,6 +1,5 @@
 <template>
     <section>
-        {{isSignUp}}
         <signin-profile-card v-if="!isSignUp" class="mt-3"></signin-profile-card>
         <signup-profile-card v-else class="mt-3"></signup-profile-card>
     </section>
