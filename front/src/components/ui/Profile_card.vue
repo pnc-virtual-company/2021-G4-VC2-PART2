@@ -175,7 +175,7 @@
                         <v-card-actions style="margin-top: -40px">
                             <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" text @click="dialog = false" v-show="isCompanyDetailHidden">
-                                cancle
+                                cancel
                             </v-btn>
                             <v-btn color="blue darken-1" text @click="isCompanyDetailHidden = !isCompanyDetailHidden" v-show="!isCompanyDetailHidden">
                                 Back
@@ -222,7 +222,7 @@
                         </template>
                         <v-card>
                             <v-card-title>
-                                <span class="text-h5">Set Image</span>
+                                <span class="text-h5">Set Profile</span>
                             </v-card-title>
                             <v-card-text>
                                 <div>

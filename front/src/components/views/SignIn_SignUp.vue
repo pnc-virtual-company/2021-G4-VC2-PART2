@@ -131,8 +131,8 @@
                                                                     <v-card-text>
                                                                         <div class="pa-2 mb-0 text-dark">
                                                                             <h3>
-                                                                                Please Contact to Our Admin or Our Ero
-                                                                                officer below:
+                                                                                Please contact to our Admin or our Ero
+                                                                                officer via:
                                                                             </h3>
                                                                         </div>
                                                                         <div class="pa-4">
@@ -219,7 +219,7 @@
                                                 <v-radio-group v-model="valueSelected" class="ml-12" @change="toSignUp">
                                                     <v-radio v-for="(index, value) of listValues" :key="index" :label="index" :value="listValues[value]"></v-radio>
                                                 </v-radio-group>
-                                                <div class="ml-8">
+                                                <div class="ml-16">
                                                     <span id="mss" :style="{ color: spanMssColor }">{{
                               selectMessage
                             }}</span>
@@ -340,7 +340,7 @@ export default {
                 alumni: [{
                         firstName: "sara",
                         lastName: "vey",
-                    },{
+                    }, {
                         firstName: "a",
                         lastName: "a",
                     },

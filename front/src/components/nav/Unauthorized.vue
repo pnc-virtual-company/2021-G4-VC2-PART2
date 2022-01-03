@@ -1,6 +1,6 @@
 <template>
     <div class="img">
-        <img src="../../assets/error_401.jpg" alt="">
+        <img src="../../assets/access_denied.jpg" alt="">
     </div>
 </template>
 
@@ -18,6 +18,6 @@ export default {
 
     img{
         width: 60%;
-        margin-top: -50px;
+        margin-top: -40px;
     }
 </style>

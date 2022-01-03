@@ -42,10 +42,12 @@
                         </div>
                     </template>
 
-                    <v-card>
-                        <v-card-title class="text-h5 blue white--text">
-                            Logging out !
-                        </v-card-title>
+                    <v-card>  
+                        <div align="center" style="background: #2196F3; color: white; padding: 10px">
+                            <h3>
+                                Logging Out !
+                            </h3>
+                        </div>
 
                         <v-card-text class="mt-4" align="center">
                             Are you sure you want to log out ?
@@ -54,7 +56,7 @@
                         <v-divider></v-divider>
 
                         <v-card-actions>
-                          <v-btn color="red" text @click="dialog = false">
+                            <v-btn color="red" text @click="dialog = false">
                                 Cancel
                             </v-btn>
                             <v-spacer></v-spacer>

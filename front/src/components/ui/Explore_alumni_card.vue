@@ -28,177 +28,6 @@
     </div>
     <!-- End Search and Sort -->
 
-    <!-- 
-    <v-card class="ml-11 mr-5 mt-5 mb-5 rounded-lg" max-width="370" outlined dense elevation="6" v-for="(user, index) in users" :key="index">
-            <div>
-                <v-list-item three-line>
-                    <v-list-item-content>
-                        <div>
-                            <div class="text-overline mb-8 d-flex">
-                                <img src="../../assets/pn-logo.png" alt="" width="35px" height="35px" class="rounded-circle mr-1">
-                                <h5 class="mt-1">BATCH: {{ user.batch }} - {{ user.major }}</h5>
-                            </div>
-                        </div>
-                        <v-list-item-title class="text--h6 ml-1 blue--text" style="margin-right: -10px">
-                            Current Employment
-                        </v-list-item-title>
-                        <div class="d-flex">
-                            <img :src=" 'http://127.0.0.1:8000/storage/images/companies/' + user.companyImage " alt="" width="40px" height="40px" class="rounded-circle mr-1">
-                            <h5 class="mt-4">{{ user.companyName }}</h5>
-                        </div>
-                    </v-list-item-content>
-                    <div style="margin-top: -40px">
-
-                         <v-avatar v-if="user.userImage === null" size="80" class="profile ml-4 mt-4">
-                                    <img src="https://www.portal.chat/img/avatar.svg" alt="" />
-                                </v-avatar>
-                                <v-avatar v-else size="80" class="profile ml-4 mt-4">
-                                    <img :src="'http://127.0.0.1:8000/storage/images/users/' + user.userImage" alt="" />
-                                </v-avatar>
-                        <v-list-item-title class="text-h6 mb-1 mt-0" align="center">
-                            {{ user.firstName }}
-                        </v-list-item-title>
-                    </div>
-                </v-list-item>
-                <div class="text-caption ml-5 mr-5 pa-2 rounded-lg" style="border: 1px solid #2196F3">
-                    <p>Position: {{ user.alumniPosition }}</p>
-                    <p style="margin-top: -10px">HR: {{ user.companyHR }}</p>
-                    <p style="margin-top: -10px">Email: {{ user.companyEmail }}</p>
-                    <p style="margin-top: -10px" class="mb-0">Tel: +855 {{ user.companyContact }}</p>
-                </div> -->
-    <!-- Dialog -->
-    <!-- <v-row class="float-end mt-1 mb-1 mr-2">
-                    <v-dialog v-model="dialog" ftransition="dialog-bottom-transition" max-width="850" max-height="600">
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-card-actions>
-                                <v-btn outlined text color="orange" darken-2 v-bind="attrs" v-on="on" @click="getOneAlumniDetails(user.user_id)">
-                                    Detail
-                                </v-btn>
-                            </v-card-actions>
-                        </template> -->
-    <!-- Start Card -->
-    <!-- <v-card class="mx-auto rounded-lg" max-width="850" dense elevation="5" height="100%">
-                            <div align="center">
-                                <v-avatar v-if="eachUserDetails.userImage === null" size="120" class="profile ml-4 mt-4">
-                                    <img src="https://www.portal.chat/img/avatar.svg" alt="" />
-                                </v-avatar>
-                                <v-avatar v-else size="120" class="profile ml-4 mt-4">
-                                    <img :src="'http://127.0.0.1:8000/storage/images/users/' + eachUserDetails.userImage" alt="" />
-                                </v-avatar>
-
-                            </div>
-                            <div class="d-flex justify-center" style="margin-left: 40px; margin-top: 30px">
-                                <v-icon dark color="pink" class="mr-2" v-if="eachUserDetails.gender === 'Female'"> mdi-gender-female </v-icon>
-                                <v-icon dark color="blue" class="mr-2" v-else> mdi-gender-male </v-icon>
-                                <h2 class="mt-1 mr-12"> {{ eachUserDetails.firstName }} </h2>
-                            </div>
-                            <div class="d-flex ma-1 mt-3">
-                                <div class="alumni-info-left">
-                                    <div class="d-flex">
-                                        <v-avatar size="50">
-                                            <img src="../../assets/pn-logo.png" alt="" />
-                                        </v-avatar>
-                                        <h4 class="mt-4 ml-2">BATCH : {{ eachUserDetails.batch }}</h4>
-                                    </div>
-                                    <div class="d-flex mt-2">
-                                        <v-icon color="blue" class="ml-3" dark> mdi-map-marker </v-icon>
-                                        <h5 class="ml-5 mt-2">City: {{ eachUserDetails.city }}</h5>
-                                    </div>
-                                </div>
-                                <div class="alumni-info-center">
-                                    <div class="d-flex mt-2">
-                                        <v-icon color="blue" dark> mdi-cake-layered </v-icon>
-                                        <h5 class="mt-2 ml-4">DOB: {{ eachUserDetails.birthDate }}</h5>
-                                    </div>
-                                    <div class="d-flex mt-7">
-                                        <v-icon color="blue" dark> mdi-gender-transgender </v-icon>
-                                        <h5 class="mt-0 ml-4">Marital Status: {{ eachUserDetails.maritalStatus }}</h5>
-                                    </div>
-                                    <div class="d-flex mt-4">
-                                        <v-icon dark color="blue"> mdi-phone </v-icon>
-                                        <h5 class="ml-4 mt-1">Tel: +885 {{ eachUserDetails.phoneNumber }}</h5>
-                                    </div>
-                                </div>
-                                <div class="alumni-info-right">
-                                    <div class="d-flex mt-4">
-                                        <v-icon color="blue" dark> mdi-marker-check </v-icon>
-                                        <h5 class="ml-4">Major: {{ eachUserDetails.major }}</h5>
-                                    </div>
-                                    <div class="d-flex mt-4">
-                                        <v-icon color="blue" dark> mdi-lightbulb-on </v-icon>
-                                        <h5 class="ml-4 mt-2">Skills: {{ eachUserDetails.skills }}</h5>
-                                    </div>
-                                    <div class="d-flex mt-5">
-                                        <v-icon dark color="blue"> mdi-email </v-icon>
-                                        <h5 class="ml-4">Email: {{ eachUserDetails.email }}</h5>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <v-card-actions>
-                                <v-btn class="explore-btn" text color="blue accent-4" @click="showCompany">
-                                    Explore
-                                </v-btn>
-                            </v-card-actions>
-                            <v-expand-transition>
-                                <v-card v-if="reveal" class="transition-fast-in-fast-out v-card--reveal" style="height: 100%">
-                                    <v-card-text class="pb-0">
-                                        <div class="d-flex">
-
-                                            <v-avatar size="120">
-                                                <img :src="'http://127.0.0.1:8000/storage/images/companies/' + eachUserDetails.companyImage" alt="" />
-                                            </v-avatar>
-                                            <p class="text-h4 orange--text mt-5" style="margin-left: 20%">
-                                                {{ eachUserDetails.companyName }}
-                                            </p>
-                                        </div>
-                                        <h5 class="ml-2 blue--text text-decoration-underline">
-                                            {{ eachUserDetails.companyWebsite }}
-                                        </h5>
-                                        <p class="text-h4 blue--text mb-7" style="margin-left: 41%; margin-top: -43px">
-                                            {{ eachUserDetails.alumniPosition }}
-                                        </p>
-                                        <div class="d-flex mb-7 rounded" style="background: #2196f3; padding: 4px">
-                                            <v-icon class="ml-1" light color="white">mdi-city</v-icon>
-                                            <h3 class="ml-4 mt-1 white--text">Company's Info</h3>
-                                        </div>
-                                        <div class="mb-6 mt-3 d-flex justify-space-between">
-                                            <div class="d-flex" style="width: 63%">
-                                                <v-icon dark color="blue" class="mr-1"> mdi-map-marker </v-icon>
-                                                <h3 class="mr-12 ml-3">Address: {{ eachUserDetails.companyLocation }}.</h3>
-                                            </div>
-                                            <div class="d-flex" style="width: 36%">
-                                                <v-icon dark color="blue"> mdi-comment-account </v-icon>
-                                                <h3 class="ml-2 ml-3">HR's name: {{ eachUserDetails.companyHR }}</h3>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-space-between">
-                                            <div class="d-flex" style="width: 63%">
-                                                <v-icon dark color="blue" class="mr-1"> mdi-email </v-icon>
-                                                <h3 class="mr-12 ml-3">Email: {{ eachUserDetails.companyEmail }} </h3>
-                                            </div>
-                                            <div class="d-flex" style="width: 36%">
-                                                <v-icon dark color="blue"> mdi-phone </v-icon>
-                                                <h3 class="ml-2 ml-3">Tel: +855 {{ eachUserDetails.companyContact }}</h3>
-                                            </div>
-                                        </div>
-                                    </v-card-text>
-                                    <v-card-actions class="pt-0 float-end">
-                                        <v-btn class="close-btn" text color="red accent-4" @click="showCompany">
-                                            Close
-                                        </v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-expand-transition>
-                        </v-card> -->
-    <!-- End Card -->
-    <!-- </v-dialog>
-                </v-row> -->
-    <!-- End Dialog -->
-    <!-- </div>
-        </v-card> -->
-    <!-- End Card -->
-
     <div class="d-flex flex-wrap pa-12">
         <!-- Start Card -->
         <v-row justify="center">
@@ -267,31 +96,57 @@
                             </div>
                         </div>
                     </v-expansion-panel-header>
-                    <v-expansion-panel-content>
+                    <v-expansion-panel-content class="subtitle-2">
                         <div class="detail-info">
                             <h3>Detailed Information</h3>
                         </div>
-                        <div class="alumni-city d-flex">
-                          <v-icon color="blue" class="ml-3" dark> mdi-map-marker </v-icon>
-                          {{ user.city }}  
+                        <div class="alumni-first-column d-flex mt-3">
+                            <div style="width: 45%">
+                                <v-icon color="blue" class="ml-3 mr-2" dark> mdi-map-marker </v-icon>
+                                {{ user.city }}
+                            </div>
+                            <div style="width: 30%" class="d-flex">
+                                <span class="blue--text">Company <span class="ml-2 mr-3">:</span> </span> {{ user.companyName }}
+                            </div>
+                            <div style="width: 30%" class="d-flex">
+                                <span class="blue--text">Position <span class="ml-7 mr-3">:</span> </span> {{ user.alumniPosition }}
+                            </div>
                         </div>
-                        <div class="alumni-city  d-flex">
-                          {{ user.birthDate }}  
+                        <div class="alumni-second-column  d-flex mt-3">
+                            <div style="width: 45%">
+                                <v-icon color="blue" class="ml-3 mr-2" dark> mdi-cake-layered </v-icon>
+                                {{ user.birthDate }}
+                            </div>
+                            <div style="width: 30%">
+                                <span class="blue--text">Location <span class="ml-3 mr-2">:</span> </span> {{ user.companyLocation }}
+                            </div>
+                            <div style="width: 30%">
+                                <span class="blue--text">HR's name <span class="ml-4 mr-2">:</span> </span> {{ user.companyHR }}
+                            </div>
                         </div>
-                        <div class="alumni-city  d-flex">
-                          {{ user.maritalStatus }}  
+                        <div class="alumni-third-column  d-flex mt-3">
+                            <div style="width: 45%">
+                                <v-icon color="blue" class="ml-3 mr-2" dark> mdi-gender-transgender </v-icon>
+                                {{ user.maritalStatus }}
+                            </div>
+                            <div style="width: 30%">
+                                <span class="blue--text">Tel <span class="ml-12 mr-2">:</span> </span> +855 {{ user.companyContact }}
+                            </div>
+                            <div style="width: 30%">
+                                <span class="blue--text">HR's mail <span class="ml-6 mr-2">:</span> </span> {{ user.companyEmail }}
+                            </div>
                         </div>
-                        {{ user.companyName }}
-                        {{ user.alumniPosition }}
-                        {{ user.companyLocation }}
-                        {{ user.companyHR }}
-                        {{ user.companyContact }}
-                        {{ user.companyEmail }}
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>
         </v-row>
     </div>
+
+    <!-- Pagination Start -->
+    <div class="text-center">
+        <v-pagination v-model="pagination.current" :length="pagination.total" @input="onPageChange" :total-visible="7"></v-pagination>
+    </div>
+    <!-- Pagination End -->
 </section>
 </template>
 
@@ -309,32 +164,25 @@ export default {
         notifications: false,
         sound: true,
         widgets: false,
+        // ________Pagination________ //
+        pagination: {
+            current: 1,
+            total: 0
+        }
     }),
     methods: {
-        // _______________GET ALUMNI DETAILS________________ //
-        getAlumniDetails() {
-            axios
-                .get("companies_detail")
-                .then((res) => {
-                    this.users = res.data;
-                    console.log(this.users);
-                })
-                .catch((error) => {
-                    console.log(error.data);
+        // _______________PAGINATION________________ //
+        getAlumni() {
+            axios.get('companies_detail?page=' + this.pagination.current)
+                .then(response => {
+                    this.users = response.data.data;
+                    this.pagination.current = response.data.current_page;
+                    this.pagination.total = response.data.last_page;
                 });
         },
-        // _______________GET ONE ALUMNI DETAILS________________ //
-        getOneAlumniDetails(id) {
-            console.log(id);
-            axios
-                .get("companies_user_detail/" + id)
-                .then((res) => {
-                    this.eachUserDetails = res.data[0];
-                    console.log(this.eachUserDetails);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        // _______________ON PAGE CHANGE______________ //
+        onPageChange() {
+            this.getAlumni();
         },
         // _______________SEARCH USER________________ //
         search() {
@@ -383,7 +231,7 @@ export default {
         },
     },
     mounted() {
-        this.getAlumniDetails();
+        this.getAlumni();
     },
 };
 </script>

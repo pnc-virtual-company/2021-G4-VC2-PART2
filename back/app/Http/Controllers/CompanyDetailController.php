@@ -14,7 +14,7 @@ class CompanyDetailController extends Controller
      */
     public function index()
     {
-        return CompanyDetail::select('company_details.*', 'user_details.*', 'users.*', 'companies.*')->join('users', 'users.id', '=', 'company_details.user_id')->join('user_details', 'user_details.user_id', '=', 'users.id')->join('companies', 'company_details.company_id', '=', 'companies.id')->get();
+        return CompanyDetail::select('company_details.*', 'user_details.*', 'users.*', 'companies.*')->join('users', 'users.id', '=', 'company_details.user_id')->join('user_details', 'user_details.user_id', '=', 'users.id')->join('companies', 'company_details.company_id', '=', 'companies.id')->paginate(3);
     }
 
 
