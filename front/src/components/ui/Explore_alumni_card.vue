@@ -268,7 +268,25 @@
                         </div>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <div>hello</div>
+                        <div class="detail-info">
+                            <h3>Detailed Information</h3>
+                        </div>
+                        <div class="alumni-city d-flex">
+                          <v-icon color="blue" class="ml-3" dark> mdi-map-marker </v-icon>
+                          {{ user.city }}  
+                        </div>
+                        <div class="alumni-city  d-flex">
+                          {{ user.birthDate }}  
+                        </div>
+                        <div class="alumni-city  d-flex">
+                          {{ user.maritalStatus }}  
+                        </div>
+                        {{ user.companyName }}
+                        {{ user.alumniPosition }}
+                        {{ user.companyLocation }}
+                        {{ user.companyHR }}
+                        {{ user.companyContact }}
+                        {{ user.companyEmail }}
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>
@@ -313,7 +331,6 @@ export default {
                 .then((res) => {
                     this.eachUserDetails = res.data[0];
                     console.log(this.eachUserDetails);
-                    // console.log(this.eachUserDetails.userImage);/
                 })
                 .catch((error) => {
                     console.log(error);
@@ -589,5 +606,16 @@ option {
 
 .userTel {
     width: 26%;
+}
+
+.detail-info {
+    background: #2196f3;
+    border-radius: 5px;
+    text-align: center;
+    padding: 3px;
+}
+
+.detail-info h3 {
+    color: white;
 }
 </style>
