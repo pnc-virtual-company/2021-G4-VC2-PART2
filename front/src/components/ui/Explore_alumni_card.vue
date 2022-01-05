@@ -7,7 +7,7 @@
                 <input type="search" class="search_input" placeholder="Search ..." v-model="search_name" @keyup="search" />
                 <i class="fas fa-search"></i>
             </div>
-            <v-row class="ml-12 mr-12">
+            <v-row class="ml-12 mr-12 filter">
                 <v-col>
                     <v-select class="filter_batch" v-model="batch" @change="sort('batch', batch)" :items="listBatch" label="Batch" dense solo></v-select>
                 </v-col>
@@ -210,12 +210,11 @@ export default {
                     .catch((error) => {
                         console.log(error);
                     });
-            } else {
+            } else if (this.search_name == ''){
                 axios
                     .get("companies_detail")
                     .then((res) => {
                         this.users = res.data;
-                        console.log(this.users);
                     })
                     .catch((error) => {
                         console.log(error);
@@ -360,50 +359,6 @@ export default {
     color: black;
 }
 
-.select-group {
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    margin-right: 5%;
-    margin-left: 5%;
-}
-
-.filter_batch,
-.filter_major,
-.filter_company,
-.filter_city {
-    height: 40px;
-    border-radius: 5px;
-}
-
-.filter_batch {
-    width: 80%;
-}
-
-.filter_major {
-    width: 80%;
-}
-
-.filter_company {
-    width: 80%;
-}
-
-.filter_city {
-    width: 80%;
-}
-
-select {
-    text-align: center;
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-option {
-    background: rgb(214, 214, 214);
-    color: black;
-}
 
 /* Card */
 .v-card--reveal {

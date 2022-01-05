@@ -9,7 +9,6 @@
 
         <h4 class="d-flex justify-center mt-4 mb-2">{{ userName }}</h4>
 
-      
         <v-list-item v-show="userRole==='Admin'"   :to="{ path: '/manage_user' }">
             <v-list-item-icon>
             <v-icon>mdi-account-cog</v-icon>
@@ -104,7 +103,6 @@ export default {
         if (this.userId != null) {
             this.getUser();
         }
-
     },
 };
 </script>

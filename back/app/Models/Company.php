@@ -15,11 +15,12 @@ class Company extends Model
         return $this->hasMany(User::class);
     }
 
-    public function companyDetail(){
-        return $this->belongsTo(CompanyDetail::class);
-    }
-
     public function userDetail(){
         return $this->belongsTo(UserDetail::class);
+    }
+
+    public function companyDetail() 
+    {
+        return $this->hasMany(CompanyDetail::class);
     }
 }

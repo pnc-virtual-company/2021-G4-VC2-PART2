@@ -13,7 +13,12 @@ class CompanyDetail extends Model
 
     protected $hidden = ['created_at', 'updated_at'];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
+    }
+
+    public function company(){
+        return $this->belongsTo(Company::class);
     }
 }

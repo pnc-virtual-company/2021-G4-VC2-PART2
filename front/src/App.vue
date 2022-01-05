@@ -27,7 +27,7 @@
     </v-app-bar>
     <v-main>
         <v-container fluid>
-            <router-view @signin="logIn" @signup="signUp" :error="message_error" :emailError="email_error" :passwordError="password_error"></router-view>
+            <router-view @signin="logIn" @signup="signUp" :error="message_error" :errorEmail="email_error" :errorPassword="password_error"></router-view>
         </v-container>
     </v-main>
     <v-footer app> </v-footer>
@@ -118,9 +118,12 @@ export default {
                     location.reload();
                 })
                 .catch(error => {
-                    this.email_error = error.response.data.message;
-                    this.password_error = error.response.data.errors.password;
-                    console.log(this.email_error);
+                    if (error.response.data.errors.email) {
+                        this.email_error = error.response.data.errors.email[0];
+                    } 
+                    if (error.response.data.errors.password) {
+                        this.password_error = error.response.data.errors.password[0];
+                    }
                     localStorage.setItem('isSignUp', false);
                 });
         },

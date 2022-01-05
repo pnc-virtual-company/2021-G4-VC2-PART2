@@ -26,7 +26,6 @@ class CompanyDetailController extends Controller
     public function getOne($id)
     {
         return CompanyDetail::select('company_details.*', 'user_details.*', 'users.*', 'companies.*')->join('users', 'users.id', '=', 'company_details.user_id')->join('user_details', 'user_details.user_id', '=', 'users.id')->join('companies', 'companies.user_id', '=', 'user_details.user_id')->where('users.id', $id)->get();
-        
     }
 
     /**

@@ -73,28 +73,26 @@ class UserDetailController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'gender' => 'nullable',
-            'DOB' => 'nullable',
-            'batch' => 'nullable',
-            'major' => 'nullable',
-            'skills' => 'nullable',
-            'city' => 'nullable',
-            'maritalStatus' => 'nullable',
+            'gender' => 'required',
+            'birthDate' => 'required',
+            'major' => 'required',
+            'skills' => 'required',
+            'city' => 'required',
+            'maritalStatus' => 'required',
+            'phoneNumber' => 'required',
         ]);
 
         $userDetail = UserDetail::findOrFail($id);
-        $userDetail->user_id = $request->user_id;
-        $userDetail->company_id = $request->company_id;
         $userDetail->gender = $request->gender;
-        $userDetail->DOB = $request->DOB;
-        $userDetail->batch = $request->batch;
+        $userDetail->birthDate = $request->birthDate;
         $userDetail->major = $request->major;
         $userDetail->skills = $request->skills;
         $userDetail->city = $request->city;
         $userDetail->maritalStatus = $request->maritalStatus;
+        $userDetail->phoneNumber = $request->phoneNumber;
         $userDetail->save();
 
-        return response()->json([ 'message'=>'User Detail updated successfully!'],200);
+        return response()->json([ 'message'=>'User Detail updated successfully!', 'usersDetail' => $userDetail],200);
     }
 
     /**

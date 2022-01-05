@@ -84,7 +84,9 @@
                                     </v-col>
                                     <v-col cols="12" style="margin-top: -30px">
                                         <v-autocomplete v-model="skills" dense :items="existSkill" label="Skill" multiple outlined :rules="[(v) => !!v || 'Skill is required']"></v-autocomplete>
+
                                     </v-col>
+
                                     <v-col cols="12" style="margin-top: -30px">
                                         <v-text-field label="Tel: 87 XXX XXX" type="phone" outlined dense required v-model="phone" :rules="[(v) => !!v || 'Tel is required']"></v-text-field>
                                     </v-col>
@@ -237,7 +239,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="profileDialog = false">
-                                    Cancle
+                                    Cancel
                                 </v-btn>
                                 <v-btn color="blue darken-1" text @click="
                       profileDialog = false;
@@ -537,12 +539,11 @@ export default {
         // ____________ADD USER DETAIL__________ //
         selectMajor() {
             console.log(this.selectedMajor);
-            if (this.selectedMajor === 'WEP') {
-                this.existSkill = this.webSkill
+            if (this.selectedMajor === "WEP") {
+                this.existSkill = this.webSkill;
             } else {
-                this.existSkill = this.SNASkill
+                this.existSkill = this.SNASkill;
             }
-
         },
         addDetailInfo() {
             let userInfo = {
@@ -569,7 +570,6 @@ export default {
         },
 
         // ____________GET COMPANY__________ //
-
         getCompanyDetailInfo() {
             axios.get("companies_detail/" + this.userId).then((res) => {
                 this.companyInfo = res.data[0];
@@ -644,7 +644,6 @@ export default {
             console.log(item.id);
             console.log("yes");
             const searchText = queryText.toLowerCase();
-
             return textOne.indexOf(searchText) > -1;
         },
         hello() {

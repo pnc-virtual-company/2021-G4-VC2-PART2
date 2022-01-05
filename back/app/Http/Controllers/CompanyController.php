@@ -14,7 +14,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return Company::all();
+        // return Company::all();
+        return Company::with(['companyDetail'])->latest()->get();
     }
 
     /**

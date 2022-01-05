@@ -16,8 +16,8 @@
                                     </h6>
                                     <v-row align="center" justify="center">
                                         <v-col cols="12" sm="8">
-                                            <v-text-field label="Email" outlined dense color="blue" autocomplete="false" class="mt-16" append-icon="mdi-email" v-model="signInEmail" />
-                                            <v-text-field label="Password" outlined dense color="blue" autocomplete="false" v-model="signInPassword" :type="passwordShow ? 'text' : 'password'" :append-icon="
+                                            <v-text-field label="Email" outlined dense color="blue" autocomplete="false" class="mt-16" append-icon="mdi-email" v-model="signInEmail" :rules="emailRules"/>
+                                            <v-text-field label="Password" outlined dense color="blue" autocomplete="false" v-model="signInPassword" :rules="passwordRules" :type="passwordShow ? 'text' : 'password'" :append-icon="
                             passwordShow ? 'mdi-eye' : 'mdi-eye-off'
                             " @click:append="passwordShow = !passwordShow" />
                                             <div align="center" class="mb-3" style="margin-top: -10px">
@@ -26,17 +26,23 @@
                                             <v-btn color="blue" dark block tile cols="12" sm="7" @click="logInRequest">Sign in</v-btn>
 
                                             <h5 class="text-center grey--text mt-4 mb-3">
-                                                Or Sign in using
+                                                Or Visit Us At
                                             </h5>
                                             <div class="d-flex justify-space-between align-center mx-10 mb-16">
                                                 <v-btn depressed outlined color="grey">
-                                                    <v-icon color="red">fab fa-google</v-icon>
+                                                    <a href="https://www.passerellesnumeriques.org/en/" style="text-decoration: none">
+                                                        <v-icon color="red">fab fa-google</v-icon>
+                                                    </a>
                                                 </v-btn>
                                                 <v-btn depressed outlined color="grey">
-                                                    <v-icon color="blue">fab fa-facebook-f</v-icon>
+                                                    <a href="https://www.facebook.com/passerelles.numeriques" style="text-decoration: none">
+                                                        <v-icon color="blue">fab fa-facebook</v-icon>
+                                                    </a>
                                                 </v-btn>
                                                 <v-btn depressed outlined color="grey">
-                                                    <v-icon color="light-blue lighten-3">fab fa-twitter</v-icon>
+                                                    <a href="https://www.linkedin.com/company/passerellesnum-riques" style="text-decoration: none">
+                                                        <v-icon color="light-blue lighten-3">fab fa-linkedin</v-icon>
+                                                    </a>
                                                 </v-btn>
                                             </div>
                                         </v-col>
@@ -228,23 +234,21 @@
                                             <div v-show="singUpPart">
                                                 <v-row>
                                                     <v-col cols="12" sm="12">
-                                                        <v-text-field class="mt-5" label="E-mail" outlined dense :rules="[(v) => !!v || 'E-mail is required']" color="blue" autocomplete="false" style="margin-bottom: -30px" v-model="emailAddress" append-icon="mdi-email" />
-                                                        <!-- <div align="center" class="mt-5" style="margin-bottom: -15px">
-                                                            <span class="red--text">{{
+                                                        <v-text-field class="mt-5" label="E-mail" outlined dense :rules="emailRules" color="blue" autocomplete="false" style="margin-bottom: -55px" v-model="emailAddress" append-icon="mdi-email" />
+                                                        <div align="center" class="mt-7" style="margin-bottom: -15px">
+                                                            <span class="red--text">{{ errorEmail
                                 }}</span>
-                                                        </div> -->
+                                                        </div>
                                                     </v-col>
                                                     <v-col cols="12" sm="12">
-                                                        <v-text-field label="password" :type="passwordShow ? 'text' : 'password'" outlined dense :rules="[(v) => !!v || 'Password is required']" color="blue" autocomplete="false" style="margin-bottom: -30px" v-model="passWord" :append-icon="
+                                                        <v-text-field label="password" :type="passwordShow ? 'text' : 'password'" outlined dense :rules="passwordRules" color="blue" autocomplete="false" style="margin-bottom: -30px" v-model="passWord" :append-icon="
                                   passwordShow ? 'mdi-eye' : 'mdi-eye-off'
                                 " @click:append="passwordShow = !passwordShow" />
                                                     </v-col>
                                                     <v-col cols="12" sm="12">
                                                         <v-text-field label="Confirm password" :type="
                                   confirmPasswordShow ? 'text' : 'password'
-                                " outlined dense :rules="[
-                                  (v) => !!v || 'confirm Password is required',
-                                ]" color="blue" autocomplete="false" style="margin-bottom: -30px" v-model="conFirmPassWord" :append-icon="
+                                " outlined dense :rules="passwordRules" color="blue" autocomplete="false" style="margin-bottom: -30px" v-model="conFirmPassWord" :append-icon="
                                   confirmPasswordShow
                                     ? 'mdi-eye'
                                     : 'mdi-eye-off'
@@ -253,7 +257,7 @@
                                 " />
                                                         <div align="center" class="mt-4" style="margin-bottom: -30px">
                                                             <span class="red--text">{{
-                                  emailError
+                                  errorPassword
                                 }}</span>
                                                         </div>
                                                     </v-col>
@@ -263,17 +267,23 @@
 
                                             <div class="sign-up-bottom">
                                                 <h5 class="text-center grey--text mt-5 mb-3">
-                                                    Or Sign up using
+                                                    Or Visit Us At
                                                 </h5>
                                                 <div class="d-flex justify-space-between align-center mx-10 mb-11">
                                                     <v-btn depressed outlined color="grey">
-                                                        <v-icon color="red">fab fa-google</v-icon>
+                                                        <a href="https://www.passerellesnumeriques.org/en/" style="text-decoration: none">
+                                                            <v-icon color="red">fab fa-google</v-icon>
+                                                        </a>
                                                     </v-btn>
                                                     <v-btn depressed outlined color="grey">
-                                                        <v-icon color="blue">fab fa-facebook-f</v-icon>
+                                                        <a href="https://www.facebook.com/passerelles.numeriques" style="text-decoration: none">
+                                                            <v-icon color="blue">fab fa-facebook</v-icon>
+                                                        </a>
                                                     </v-btn>
                                                     <v-btn depressed outlined color="grey">
-                                                        <v-icon color="light-blue lighten-3">fab fa-twitter</v-icon>
+                                                        <a href="https://www.linkedin.com/company/passerellesnum-riques" style="text-decoration: none">
+                                                            <v-icon color="light-blue lighten-3">fab fa-linkedin</v-icon>
+                                                        </a>
                                                     </v-btn>
                                                 </div>
                                             </div>
@@ -294,8 +304,20 @@
 import PncValues from "../json/PncValues.json";
 export default {
     emits: ["signin", "signup"],
-    props: ["error", "emailError", "passwordError"],
+    props: ["error", "errorEmail", "errorPassword"],
     data: () => ({
+        // ______________EMAIL RULE_______________ //
+        emailRules: [
+            v => !!v || 'E-mail is required',
+            v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        ],
+        
+        // _______________PASSWORD RULE_______________ //
+        passwordRules: [
+            v => !!v || 'Password is required',
+            v => (v && v.length >= 7) || 'Password must be more than 6 characters',
+        ],
+
         step: 1,
         defaultSignUpTimes: 2,
         signUpTimes: 0,
