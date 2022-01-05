@@ -1,6 +1,6 @@
 <template>
     <section>
-        <signin-profile-card v-if="!isSignUp" class="mt-3"></signin-profile-card>
+        <signin-profile-card v-if="!isSignUp && isUSerComplete" class="mt-3"></signin-profile-card>
         <signup-profile-card v-else class="mt-3"></signup-profile-card>
     </section>
 </template>
@@ -15,7 +15,9 @@ export default {
     },
     data() {
         return {
-            isSignUp:JSON.parse(localStorage.getItem('isSignUp'))
+            isSignUp:JSON.parse(localStorage.getItem('isSignUp')),
+            isUSerComplete:JSON.parse(localStorage.getItem('isUSerComplete')),
+        
         }
     },
 }

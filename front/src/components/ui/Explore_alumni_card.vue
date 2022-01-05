@@ -45,20 +45,14 @@
                                         <img src="https://www.portal.chat/img/avatar.svg" alt="" />
                                     </v-avatar>
                                     <v-avatar v-else size="80" class="profile" style="margin-top: -20px">
-                                        <img :src="
-                          'http://127.0.0.1:8000/storage/images/users/' +
-                          user.userImage
-                        " alt="" />
+                                        <img :src="'http://127.0.0.1:8000/storage/images/users/' + user.userImage" alt="" />
                                     </v-avatar>
                                     <v-list-item-title class="text-h6" align="center" style="margin-bottom: -40px; color: #2196f3">
                                         {{ user.firstName }}
                                     </v-list-item-title>
                                 </div>
                                 <div class="d-flex user-company mt-4">
-                                    <img :src="
-                        'http://127.0.0.1:8000/storage/images/companies/' +
-                        user.companyImage
-                      " alt="" width="50px" height="50px" class="rounded-circle mr-1" />
+                                    <img :src="'http://127.0.0.1:8000/storage/images/companies/' + user.companyImage" alt="" width="50px" height="50px" class="rounded-circle mr-1" />
                                     <div>
                                         <div class="d-flex">
                                             <v-icon x-small color="blue" dark style="margin-top: -1px">

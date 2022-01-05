@@ -18,6 +18,7 @@ Route::post('/signup', [UserController::class, 'signup']);
 Route::post('/login', [UserController::class, 'login']);
 
 Route::get('/users', [UserController::class, 'index']);
+Route::put('/users/usersVerify/{id}', [UserController::class, 'verifyUserComplet']);
 Route::get('users/{id}', [UserController::class, 'show']);
 Route::put('/users/images/{id}', [UserController::class, 'updateImage']);
 Route::delete('/users/{id}', [UserController::class, 'destroy']);

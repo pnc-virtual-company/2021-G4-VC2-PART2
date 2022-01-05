@@ -125,8 +125,8 @@
                         </v-card>
                     </v-dialog>
                 </v-row>
-                <!-- end img dialog  -->
             </div>
+            <!-- end img dialog  -->
         </div>
         <div class="d-flex justify-center" style="margin-left: 40px; margin-top: 30px">
             <v-icon dark color="pink" class="mr-2" v-if="gender[1] === sex">
@@ -649,7 +649,7 @@ export default {
                     this.getCompanyDetailInfo();
                 })
                 .catch((error) => {
-                    console.log(error.response);
+                    console.log(error.response.data.message);
                 });
         },
     },

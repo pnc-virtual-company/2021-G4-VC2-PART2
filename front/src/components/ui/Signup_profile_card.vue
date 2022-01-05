@@ -1,6 +1,6 @@
 <template>
 <section>
-    <v-card v-show='isSignUp' class="mx-auto mt-16" max-width="344" dense elevation="4">
+    <v-card v-if="!isUSercomplete" class="mx-auto mt-16" max-width="344" dense elevation="4">
         <h1 class="white--text">Hello</h1>
         <div align="center" style="margin-top: -15px">
             <v-avatar size="100">
@@ -81,7 +81,14 @@
                                     <v-select :items="majors" dense label="Major" outlined required @change="selectMajor" v-model="selectedMajor" :rules="[(v) => !!v || 'Major is required']"></v-select>
                                 </v-col>
                                 <v-col cols="12" style="margin-top: -30px">
-                                    <v-autocomplete v-model="skills" dense :items="existSkill" label="Skill" multiple outlined :rules="[(v) => !!v || 'Skill is required']"></v-autocomplete>
+                                    <v-combobox v-model="skills" :items="existSkill" label="Select skill" outlined multiple chips small dense>
+                                        <template v-slot:selection="data">
+                                            <v-chip :key="JSON.stringify(data.item)" v-bind="data.attrs" :input-value="data.selected" :disabled="data.disabled" @click:close="data.parent.selectItem(data.item)">
+                                                <v-avatar class="accent white--text" left v-text="data.item.slice(0, 1).toUpperCase()"></v-avatar>
+                                                {{ data.item }}
+                                            </v-chip>
+                                        </template>
+                                    </v-combobox>
                                 </v-col>
                                 <v-col cols="12" style="margin-top: -30px">
                                     <v-text-field label="Tel: 87 XXX XXX" type="phone" outlined dense required v-model="phone" :rules="[(v) => !!v || 'Tel is required']"></v-text-field>
@@ -203,7 +210,7 @@
             </v-dialog>
         </v-row>
     </v-card>
-    <signin-profile-card v-if='!isSignUp'></signin-profile-card>
+    <signin-profile-card v-else></signin-profile-card>
 </section>
 </template>
 
@@ -282,6 +289,7 @@ export default {
         company_tel: "",
         companyId: null,
         listCompany: null,
+        isUSercomplete: JSON.parse(localStorage.getItem('isUSerComplete')),
     }),
     watch: {
         menu(val) {
@@ -345,7 +353,7 @@ export default {
                     console.log(res.data);
                     localStorage.setItem("isSignUp", false)
                     this.isSignUp = JSON.parse(localStorage.getItem('isSignUp'));
-                    console.log('add company detail info')
+                    this.verifyComplete();
                 })
                 .catch((error) => {
                     console.log(error);
@@ -356,6 +364,16 @@ export default {
             axios.get("companies/").then((res) => {
                 this.listCompany = res.data;
             });
+        },
+        verifyComplete() {
+            let verify = new FormData();
+            verify.append('isComplete', 1);
+            verify.append('_method', 'PUT');
+            axios.post('/users/usersVerify/' + this.userId, verify).then((res) => {
+                console.log(res.data);
+                localStorage.setItem("isUSerComplete", true);
+                location.reload();
+            })
         },
         setCompanyImg(event) {
             this.imgCompany = event.target.files[0];

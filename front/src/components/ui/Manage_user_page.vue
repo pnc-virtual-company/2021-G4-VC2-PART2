@@ -1,34 +1,5 @@
 <template>
 <div>
-    <!-- Search and Sort -->
-    <div>
-        <div class="alumni-top">
-            <div class="search">
-                <input type="search" class="search_input" placeholder="Search ..." v-model="search_name" @keyup="search" />
-                <i class="fas fa-search"></i>
-            </div>
-            <v-row class="ml-12 mr-12 filter">
-                <v-col>
-                    <v-select class="filter_batch" v-model="batch" @change="sort('batch', batch)" :items="listBatch" label="Batch" dense solo></v-select>
-                </v-col>
-                <v-col>
-                    <v-select class="filter_city" v-model="city" :items="ListCity" @change="sort('city', city)" label="City" dense solo></v-select>
-                </v-col>
-                <v-col>
-                    <v-select class="filter_company" v-model="companyName" @change="sort('company_id', companyName)" :items="listCompany" item-text="companyName" item-value="companyName" label="Company" dense solo></v-select>
-                </v-col>
-                <v-col>
-                    <v-select class="filter_major" v-model="major" @change="sort('major', major)" :items="listMajor" label="Major" dense solo></v-select>
-                </v-col>
-            </v-row>
-        </div>
-    </div>
-    <!-- End Search and Sort -->
-
-    <div v-if="!isDataAvailable" align="center" class="mt-12">
-        <h2>No Data Available</h2>
-    </div>
-    
     <div>
         <v-row justify="space-around">
             <v-col cols="auto">
@@ -78,12 +49,33 @@
                 <img v-else class="profileImg" width="40px" height="40px" :src="'http://127.0.0.1:8000/storage/images/users/'+item.userImage" alt="Profile Imag">
             </template>
             <template v-slot:[`item.actions`]="{ item }">
-                <v-icon small @click="deleteUser(item.id)" color="red">
-                    mdi-delete
-                </v-icon>
+                <v-icon v-if="item.role==='Admin'" small color="red" disabled > mdi-delete-off </v-icon>
+                <v-icon v-else @click="showDialog(item)" small color="red"> mdi-delete </v-icon>
             </template>
         </v-data-table>
     </div>
+
+    <!-- Delete Dialog -->
+    <v-dialog v-model="deleteDialog" max-width="320">
+        <v-card>
+            <v-card-title class="text-h5"> Delete this user ? </v-card-title>
+
+            <v-card-text> Are you sure you want to delete this user ? </v-card-text>
+
+            <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn color="red darken-1" text @click="deleteDialog = false">
+                    Discard
+                </v-btn>
+
+                <v-btn color="blue darken-1" text @click="deleteDialog = false;deleteUser();">
+                    Yes, Sure !
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+    <!-- End Delete Dialog -->
 </div>
 </template>
 
@@ -168,6 +160,10 @@ export default {
         close() {
             this.dialog = false;
         },
+        showDialog(user) {
+            this.userDelete = user
+            this.deleteDialog = true
+        },
         // _____________________VALIDATION_______________________ //
         accountValidation() {
             let user = {
@@ -192,17 +188,19 @@ export default {
                 password: this.password,
                 password_confirmation: this.confirm_password,
                 role: "ERO",
+                isComplete: 0
             };
-            this.dialog = false;
+            // this.dialog = false;
             axios.post("signup", eroUser)
                 .then(() => {
                     this.getUser();
-                    // ____CLEAR INPUT____ //
-                    eroUser.firstName = '',
-                        eroUser.lastName = '',
-                        eroUser.email = '',
-                        eroUser.password = '',
-                        eroUser.password_confirmation = ''
+                    // ___CLEAR INPUT___ //
+                    this.firstName = '',
+                    this.lastName = '',
+                    this.email = '',
+                    this.password = '',
+                    this.password_confirmation = ''
+                    this.dialog = false;
                 })
                 .catch((err) => {
                     console.log(err.response.data.message);
@@ -219,8 +217,8 @@ export default {
                 });
         },
         // _________________________DELETE USER_______________________ //
-        deleteUser(id) {
-            axios.delete("users/" + id)
+        deleteUser() {
+            axios.delete("users/" + this.userDelete.id)
                 .then(() => {
                     this.getUser();
                 })
@@ -294,16 +292,33 @@ export default {
                     this.major = "";
                     this.city = "";
                 }
-
             }
             if (!isHasData) {
                 this.isDataAvailable = false
             }
         },
+        // ________________________DELETE USER______________________ //
+        // deleteUser() {
+        //     console.log(this.userDelete.id);
+        //     let userId = this.userDelete.id;
+        //     let companyDetailId = this.userDelete.company_detail_id;
+        //     let userDetailId = this.userDelete.user_detail_id;
+        //     if (this.userDelete.role === "ERO" || this.userDelete.role === "Admin") {
+        //         axios.delete("users/" + userId).then(() => {});
+        //         axios.delete("usersDetail/" + userDetailId).then(() => {});
+        //         axios.delete("companies_detail/" + companyDetailId).then(() => {
+        //             this.getUser();
+        //         });
+        //     } else {
+        //         axios.delete("users/" + userId).then(() => {
+        //             this.getUser()
+        //         })
+        //     }
+        // },
     },
     mounted() {
         this.getUser();
-        this.getCompany();
+        // this.getCompany();
     },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-<v-container style="margin-top: 0">
+<v-container style="margin-top: 20px">
     <v-row align="center" justify="center">
         <v-col cols="12" sm="10">
             <v-card class="elevation-6 mt-10">
@@ -16,7 +16,7 @@
                                     </h6>
                                     <v-row align="center" justify="center">
                                         <v-col cols="12" sm="8">
-                                            <v-text-field label="Email" outlined dense color="blue" autocomplete="false" class="mt-16" append-icon="mdi-email" v-model="signInEmail" :rules="emailRules"/>
+                                            <v-text-field label="Email" outlined dense color="blue" autocomplete="false" class="mt-16" append-icon="mdi-email" v-model="signInEmail" :rules="emailRules" />
                                             <v-text-field label="Password" outlined dense color="blue" autocomplete="false" v-model="signInPassword" :rules="passwordRules" :type="passwordShow ? 'text' : 'password'" :append-icon="
                             passwordShow ? 'mdi-eye' : 'mdi-eye-off'
                             " @click:append="passwordShow = !passwordShow" />
@@ -311,7 +311,7 @@ export default {
             v => !!v || 'E-mail is required',
             v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         ],
-        
+
         // _______________PASSWORD RULE_______________ //
         passwordRules: [
             v => !!v || 'Password is required',
@@ -468,6 +468,7 @@ export default {
                 password_confirmation: this.conFirmPassWord,
                 role: "Alumni",
                 batch: this.batch,
+                isComplete: 0,
             };
             // console.log(newUsers);
             this.$emit("signup", newUsers);
@@ -520,7 +521,7 @@ export default {
                     this.batch = null;
                     this.firstName = null;
                     this.lastName = null;
-                }, 2000);
+                }, 4000);
             } else {
                 this.message = "Welcome back, Alumni.";
                 this.dialogColor = "success";
@@ -530,7 +531,7 @@ export default {
                     this.getValues();
                     this.namePart = !this.namePart;
                     this.questionPart = !this.questionPart;
-                }, 2000);
+                }, 4000);
             }
         },
         // ________________TO SIGN UP___________________ //
@@ -547,14 +548,14 @@ export default {
                 setTimeout(() => {
                     this.singUpPart = !this.singUpPart;
                     this.questionPart = !this.questionPart;
-                }, 1500);
+                }, 4000);
             } else {
                 this.spanMssColor = "red";
                 this.selectMessage = "Your choice is incorrect !";
                 setTimeout(() => {
                     this.selectMessage = null;
                     this.valueSelected = null;
-                }, 1500);
+                }, 4000);
                 this.getValues();
             }
         },

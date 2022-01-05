@@ -1,6 +1,6 @@
 <template>
-<section>
-    <v-select v-model="select" :items="itemSelect" color="white" item-text="name" dense solo label="Select" style="width: 200px; margin-left: 50px"></v-select>
+<section class="manage_data">
+    <v-select v-model="select" :items="itemSelect" color="white" item-text="name" dense solo label="Select Data" class='select'></v-select>
     <manage-user-page v-show="select === 'User' || select === ''"></manage-user-page>
     <manage-company-page v-show="select === 'Company'"></manage-company-page>
 </section>
@@ -17,8 +17,21 @@ export default {
     data() {
         return {
             select: "",
-            itemSelect: ["User", "Company", "User_Detail", "Company_Detail"],
+            itemSelect: ["User", "Company"],
         };
     },
 };
 </script>
+
+<style scoped>
+.manage_data {
+    margin-top: 25px;
+}
+
+.select {
+    position: absolute;
+    margin-top: 10px;
+    width: 200px;
+    margin-left: 50px;
+}
+</style>
